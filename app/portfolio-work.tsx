@@ -22,6 +22,26 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [projects, setProjects] = useState(initialProjects);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const preconnectedOrigins = useRef(new Set<string>());
+
+  function prefetchLiveProject(liveUrl?: string) {
+    if (!liveUrl) return;
+
+    const origin = new URL(liveUrl).origin;
+    if (preconnectedOrigins.current.has(origin)) return;
+
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = origin;
+    preconnect.crossOrigin = "anonymous";
+    document.head.append(preconnect);
+    preconnectedOrigins.current.add(origin);
+  }
+
+  function openProject(project: Project) {
+    prefetchLiveProject(project.liveUrl);
+    setSelectedTitle(project.title);
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -87,7 +107,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
         <p className="project-modal-description">{selectedProject.description}</p>
         {selectedProject.liveUrl ? (
           <div className="project-modal-preview project-modal-live-preview">
-            <iframe src={selectedProject.liveUrl} title={`${selectedProject.title} live preview`} loading="lazy" />
+            <iframe src={selectedProject.liveUrl} title={`${selectedProject.title} live preview`} loading="eager" />
           </div>
         ) : selectedProject.image ? (
           <div className="project-modal-preview">
@@ -137,12 +157,26 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
               <p className="p-desc">{project.description}</p>
               <ul className="tags">{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
               <div className="p-links">
-                <button className="project-detail-link" onClick={() => setSelectedTitle(project.title)} type="button">Project details ↗</button>
+                <button className="project-detail-link" onClick={() => openProject(project)} type="button">Project details ↗</button>
                 {project.liveUrl && <a className="live" href={project.liveUrl} rel="noreferrer" target="_blank">Live demo ↗</a>}
                 <a href={project.sourceUrl} rel="noreferrer" target="_blank">Source code ↗</a>
               </div>
             </div>
-            <div className="p-visual">
+            <div
+              aria-label={`Open ${project.title} project details`}
+              className="p-visual p-visual--interactive"
+              onClick={() => openProject(project)}
+              onFocus={() => prefetchLiveProject(project.liveUrl)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  openProject(project);
+                }
+              }}
+              onPointerEnter={() => prefetchLiveProject(project.liveUrl)}
+              role="button"
+              tabIndex={0}
+            >
               <div className="device">
                 <div className="d-bar"><i /><i /><i /><span>{project.title.toLowerCase()}</span></div>
                 <div className="d-body">

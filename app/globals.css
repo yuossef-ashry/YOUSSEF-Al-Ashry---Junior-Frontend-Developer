@@ -362,6 +362,9 @@ body.loaded .rv-up { transform: none; }
   perspective: 1400px;
   transform: translateY(-46%);
 }
+.p-visual--interactive { cursor: pointer; }
+.p-visual--interactive:focus-visible { outline: 2px solid var(--red); outline-offset: 10px; }
+.p-visual--interactive:hover .device { box-shadow: 0 34px 70px -28px rgba(225, 18, 27, .34), 0 0 0 1px var(--red) inset; }
 .device {
   border-radius: 22px; overflow: hidden;
   background: #fff;
