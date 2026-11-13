@@ -340,3 +340,45 @@ export const packages = [
     ],
   },
 ];
+
+export const profile = {
+  name: "Youssef Al-Ashry",
+  role: "Junior Frontend Developer",
+  location: "Egypt",
+  email: "yaasef0100@gmail.com",
+  phone: "+201214858840",
+  availability: "Open to junior frontend roles and focused freelance projects",
+  hero: {
+    headline: "Junior Frontend Developer",
+    summary:
+      "I build responsive, interactive interfaces with a strong JavaScript foundation and practical React and TypeScript skills, focused on clear, user-friendly experiences.",
+  },
+  socialLinks: {
+    github: "https://github.com/yuossef-ashry",
+    whatsapp: "https://wa.me/201214858840",
+  },
+};
+
+export const navigation = [
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#work" },
+  { label: "Journey", href: "#journey" },
+  { label: "Toolkit", href: "#toolkit" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
+];
+
+export const portfolioData = {
+  profile,
+  navigation,
+  projects,
+  skills,
+  services,
+  serviceDetails,
+  processSteps,
+  milestones,
+  packages,
+};
+
+export type PortfolioData = typeof portfolioData;
+export type PortfolioResource = keyof PortfolioData;

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import CertificateViewer from "./certificate-viewer";
-import { milestones, packages, projects, processSteps, serviceDetails, services, skills } from "./portfolio-data";
+import { milestones, packages, projects, processSteps, serviceDetails, services, skills } from "@/lib/portfolio-data";
 import PortfolioInteractions from "./portfolio-interactions";
 import PortfolioWork from "./portfolio-work";
 import ProjectBriefForm from "./project-brief-form";
@@ -202,7 +202,7 @@ export default function PortfolioContent() {
               <div className="w-bar"><i /></div>
             </div>
 
-            <PortfolioWork />
+            <PortfolioWork initialProjects={projects} />
           </div>
         </section>
 

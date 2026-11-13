@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { projects } from "./portfolio-data";
+import type { Project } from "@/lib/portfolio-data";
 
 type Filter = "all" | "website" | "app";
 
@@ -12,12 +12,35 @@ const filters: Array<{ id: Filter; label: string }> = [
   { id: "app", label: "Web applications" },
 ];
 
-export default function PortfolioWork() {
+type PortfolioWorkProps = {
+  initialProjects: Project[];
+};
+
+export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
+  const [projects, setProjects] = useState(initialProjects);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadProjects() {
+      try {
+        const response = await fetch("/api/projects", { signal: controller.signal });
+        if (!response.ok) return;
+        const apiProjects: Project[] = await response.json();
+        setProjects(apiProjects);
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") return;
+      }
+    }
+
+    void loadProjects();
+    return () => controller.abort();
+  }, []);
   const visibleProjects = useMemo(
     () => projects.filter((project) => filter === "all" || project.kind === filter),
-    [filter],
+    [filter, projects],
   );
   const selectedProject = projects.find((project) => project.title === selectedTitle);
 
