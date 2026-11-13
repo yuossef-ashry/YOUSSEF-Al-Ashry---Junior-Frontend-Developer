@@ -27,6 +27,10 @@ Preview control regression tests used deterministic fixture pages; separate real
 
 The owner has since confirmed that Google indexed the primary home page (Search Console reported a successful smartphone crawl on 2026-11-13 at 12:58:18). GitHub and LinkedIn profile website links were also saved and checked separately. A manual reindex request is not a prerequisite for an already indexed page.
 
+Published application commit `36df196` to GitHub and Cloudflare Pages. Repeated all 60 Chrome project/viewport checks and the project/certificate interaction suite on the primary public URL; they passed. Public checks also confirmed the corrected email, ten JSON endpoints, missing-resource 404s, canonical URL, verification tag, robots, sitemap, and responsive image delivery, with no main-page JavaScript errors.
+
+One final public Lighthouse run per device measured performance 96 on mobile (LCP 2.14s, TBT 53ms, CLS 0.0115) and 100 on desktop (LCP 0.54s, TBT 3ms, CLS 0). Accessibility, best practices, and SEO scored 100 in both runs. These single lab runs describe this test environment and are not field measurements or a guarantee for every visit.
+
 ## Earlier Review — 2026-11-13
 
 Reviewed on 2026-11-13 against the public site and the corrected production build.
