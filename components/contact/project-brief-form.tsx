@@ -2,7 +2,7 @@
 
 import type { FormEvent } from "react";
 
-export default function ProjectBriefForm() {
+export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string }) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -15,7 +15,7 @@ export default function ProjectBriefForm() {
       `Details: ${formData.get("details")}`,
     ].join("\n");
 
-    window.open(`https://wa.me/201214858840?text=${encodeURIComponent(details)}`, "_blank", "noopener,noreferrer");
+    window.open(`${whatsappUrl}?text=${encodeURIComponent(details)}`, "_blank", "noopener,noreferrer");
   }
 
   return (

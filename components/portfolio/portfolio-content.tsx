@@ -1,11 +1,11 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import CertificateViewer from "./certificate-viewer";
-import { milestones, packages, projects, processSteps, serviceDetails, services, skills } from "@/lib/portfolio-data";
+import CertificateViewer from "@/components/certificates/certificate-viewer";
+import { milestones, navigation, packages, profile, projects, processSteps, serviceDetails, services, skills } from "@/lib/portfolio-data";
 import PortfolioInteractions from "./portfolio-interactions";
-import PortfolioWork from "./portfolio-work";
-import ProjectBriefForm from "./project-brief-form";
-import ThemeToggle from "./theme-toggle";
+import PortfolioWork from "@/components/projects/portfolio-work";
+import ProjectBriefForm from "@/components/contact/project-brief-form";
+import ThemeToggle from "@/components/layout/theme-toggle";
 
 const milestonesForRing = [
   {
@@ -97,15 +97,7 @@ export default function PortfolioContent() {
         </a>
         <nav className="nav-links" aria-label="Primary">
           <span className="nav-pill" aria-hidden="true" />
-          <a href="#about" data-nav="about">About</a>
-          <a href="#work" data-nav="work">Work</a>
-          <a href="#journey" data-nav="journey">Journey</a>
-          <a href="#toolkit" data-nav="toolkit">Toolkit</a>
-          <a href="#services" data-nav="services">Services</a>
-          <a href="#service-details" data-nav="service-details">Details</a>
-          <a href="#process" data-nav="process">Process</a>
-          <a href="#pricing" data-nav="pricing">Packages</a>
-          <a href="#contact" data-nav="contact">Contact</a>
+          {navigation.map((item) => <a href={item.href} data-nav={item.href.slice(1)} key={item.href}>{item.label}</a>)}
         </nav>
         <div className="nav-tools"><ThemeToggle /></div>
         <button className="menu-btn" aria-label="Open menu" aria-expanded="false">
@@ -115,24 +107,17 @@ export default function PortfolioContent() {
       </header>
 
       <div className="mobile-menu" aria-hidden="true" inert>
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#journey">Journey</a>
-        <a href="#toolkit">Toolkit</a>
-        <a href="#services">Services</a>
-        <a href="#service-details">Service details</a>
-        <a href="#process">Process</a>
-        <a href="#pricing">Packages</a>
-        <a href="#contact">Contact</a>
+        {navigation.map((item) => <a href={item.href} key={item.href}>{item.mobileLabel ?? item.label}</a>)}
       </div>
 
       <div className="stage" aria-hidden="true">
         <Image
           className="stage-img"
-          src="/images/profile/youssef-portrait.png"
+          src="/images/profile/youssef-portrait.webp"
           alt=""
           width={1122}
           height={1402}
+          sizes="(max-width: 999px) 92vw, 48vw"
           priority
         />
       </div>
@@ -148,7 +133,7 @@ export default function PortfolioContent() {
               <span className="line red"><span className="rv-up" style={{ "--d": ".12s" } as CSSProperties}>DEVELOPER</span></span>
             </h1>
             <p className="lede rv" style={{ "--d": ".25s" } as CSSProperties}>
-              I build responsive, interactive interfaces with a strong JavaScript foundation and practical React and TypeScript skills, focused on clear, user-friendly experiences.
+              {profile.hero.summary}
             </p>
             <div className="cta rv" style={{ "--d": ".35s" } as CSSProperties}>
               <a href="#work" className="btn btn-red">Explore Projects <i>↗</i></a>
@@ -158,10 +143,11 @@ export default function PortfolioContent() {
 
           <Image
             className="m-photo hero-mphoto"
-            src="/images/profile/youssef-portrait.png"
+            src="/images/profile/youssef-portrait.webp"
             alt="Portrait of Youssef Al-Ashry"
             width={1122}
             height={1402}
+            sizes="(max-width: 999px) 92vw, 48vw"
             priority
           />
 
@@ -240,7 +226,7 @@ export default function PortfolioContent() {
             <p className="orbit-sub rv">The tools I use to shape responsive interfaces and keep frontend work moving.</p>
           </div>
 
-          <Image className="m-photo orbit-mphoto" src="/images/profile/youssef-portrait.png" alt="" width={1122} height={1402} />
+          <Image className="m-photo orbit-mphoto" src="/images/profile/youssef-portrait.webp" alt="" width={1122} height={1402} sizes="(max-width: 999px) 92vw, 48vw" />
 
           <div className="orbit-field" aria-label="Skills">
             {skills.map((skill) => (
@@ -398,27 +384,27 @@ export default function PortfolioContent() {
             <p className="contact-lede">Tell me what you are working toward. We can shape the right frontend experience, agree on a clear scope, and take it one step at a time.</p>
           </div>
 
-          <Image className="m-photo contact-mphoto" src="/images/profile/youssef-portrait.png" alt="" width={1122} height={1402} />
+          <Image className="m-photo contact-mphoto" src="/images/profile/youssef-portrait.webp" alt="" width={1122} height={1402} sizes="(max-width: 999px) 92vw, 48vw" />
 
           <div className="fg contact-bottom">
             <div className="contact-id">
               <p className="display contact-name">Youssef<br />Al-Ashry</p>
               <p className="contact-open">Open to focused projects and junior frontend roles</p>
-              <a href="mailto:yaasef0100@gmail.com" className="contact-mail">yaasef0100@gmail.com</a>
+              <a href={`mailto:${profile.email}`} className="contact-mail">{profile.email}</a>
             </div>
             <ul className="contact-links">
-              <li><a href="mailto:yaasef0100@gmail.com"><span>Email me</span><i>↗</i></a></li>
-              <li><a href="tel:+201214858840"><span>Call · +20 121 485 8840</span><i>↗</i></a></li>
-              <li><a href="https://wa.me/201214858840" target="_blank" rel="noreferrer"><span>WhatsApp</span><i>↗</i></a></li>
-              <li><a href="https://github.com/yuossef-ashry" target="_blank" rel="noreferrer"><span>GitHub</span><i>↗</i></a></li>
-              <li><a href="https://www.linkedin.com/in/youssef-mohammed-al-ashry" target="_blank" rel="noreferrer"><span>LinkedIn</span><i>↗</i></a></li>
-              <li><a href="https://www.instagram.com/youssef_alashry_51/" target="_blank" rel="noreferrer"><span>Instagram</span><i>↗</i></a></li>
-              <li><a href="https://www.facebook.com/share/19tf9NdNb6/" target="_blank" rel="noreferrer"><span>Facebook</span><i>↗</i></a></li>
+              <li><a href={`mailto:${profile.email}`}><span>Email me</span><i>↗</i></a></li>
+              <li><a href={`tel:${profile.phone}`}><span>Call · {profile.phoneDisplay}</span><i>↗</i></a></li>
+              <li><a href={profile.socialLinks.whatsapp} target="_blank" rel="noreferrer"><span>WhatsApp</span><i>↗</i></a></li>
+              <li><a href={profile.socialLinks.github} target="_blank" rel="noreferrer"><span>GitHub</span><i>↗</i></a></li>
+              <li><a href={profile.socialLinks.linkedin} target="_blank" rel="noreferrer"><span>LinkedIn</span><i>↗</i></a></li>
+              <li><a href={profile.socialLinks.instagram} target="_blank" rel="noreferrer"><span>Instagram</span><i>↗</i></a></li>
+              <li><a href={profile.socialLinks.facebook} target="_blank" rel="noreferrer"><span>Facebook</span><i>↗</i></a></li>
             </ul>
           </div>
 
           <div className="fg brief-wrap">
-            <ProjectBriefForm />
+            <ProjectBriefForm whatsappUrl={profile.socialLinks.whatsapp} />
           </div>
 
           <footer className="fg footer">

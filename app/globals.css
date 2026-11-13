@@ -443,42 +443,65 @@ body.loaded .rv-up { transform: none; }
   padding: 28px; overflow-y: auto; background: rgba(10, 10, 14, .88); backdrop-filter: blur(10px);
 }
 .project-modal {
-  position: relative; width: min(1120px, 100%); max-height: min(90vh, 1000px); overflow-y: auto;
-  padding: clamp(24px, 5vw, 48px); border-radius: 10px; background: var(--paper); color: var(--ink);
+  position: relative; display: flex; flex-direction: column; width: min(1120px, 100%); max-height: min(90dvh, 1000px); overflow: hidden;
+  border-radius: 8px; background: var(--paper); color: var(--ink);
   box-shadow: 0 32px 100px rgba(0,0,0,.35);
 }
+.project-modal-header { display: flex; flex: 0 0 auto; align-items: flex-start; gap: 20px; padding: 24px 32px 18px; border-bottom: 1px solid var(--line); }
+.project-modal-header > div { flex: 1; min-width: 0; }
+.project-modal-header .p-kicker { margin-bottom: 8px; }
+.project-modal-content { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 24px 32px 32px; }
 .project-modal-close {
-  position: absolute; z-index: 2; top: 16px; right: 16px; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--ink);
+  display: grid; flex: 0 0 auto; place-items: center; width: 42px; height: 42px; padding: 0; border: 1px solid var(--ink);
   border-radius: 50%; background: transparent; color: var(--ink); font-size: 26px; cursor: pointer;
 }
 .project-modal-close:hover, .project-modal-close:focus-visible { background: var(--red); border-color: var(--red); color: #fff; outline: none; }
-.project-modal h2 { max-width: 85%; margin-bottom: 16px; font-size: clamp(36px, 6vw, 64px); }
+.project-modal h2 { margin: 0; font-size: 40px; line-height: 1; overflow-wrap: anywhere; }
 .project-modal-description { color: var(--ink-2); }
 .project-modal-preview { width: 100%; margin: 28px 0; }
 .project-modal-image { object-fit: contain; object-position: center; }
-.project-laptop { width: 92%; margin-inline: auto; }
-.project-laptop__lid {
+.project-preview-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.project-device-switch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+.project-device-switch button { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 88px; height: 36px; padding: 0 10px; border: 0; border-radius: 3px; background: transparent; color: var(--ink-2); font: 600 12px var(--f-body); cursor: pointer; }
+.project-device-switch button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.project-device-switch button:hover:not(:disabled):not([aria-pressed="true"]) { background: var(--paper); }
+.project-device-switch button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.project-device-switch button:disabled { opacity: .35; cursor: not-allowed; }
+.project-device-switch svg { flex-shrink: 0; stroke: var(--ink-2); }
+.project-device-switch button[aria-pressed="true"] svg { stroke: var(--paper); }
+.project-preview-size { min-width: 12ch; color: var(--ink-2); font: 11px var(--f-mono); text-align: right; }
+.project-device { width: 92%; margin-inline: auto; }
+.project-device--laptop { max-width: max(240px, calc((100dvh - 390px) * 1.6)); }
+.project-device__frame {
   position: relative; padding: 16px 8px 10px; border: 1px solid #48484f; border-radius: 12px 12px 2px 2px;
   background: #17171d; box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
 }
-.project-laptop__lid::before {
+.project-device__frame::before {
   content: ""; position: absolute; top: 6px; left: 50%; width: 4px; height: 4px;
   border-radius: 50%; background: #686870; transform: translateX(-50%);
 }
-.project-laptop__screen { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: #fff; }
-.project-laptop__viewport {
-  position: absolute; top: 0; left: 0; display: block; width: 1440px; height: 900px;
+.project-device__screen { position: relative; width: 100%; aspect-ratio: var(--preview-ratio); overflow: hidden; background: #fff; }
+.project-device__viewport {
+  position: absolute; top: 0; left: 0; display: block; width: var(--preview-width); height: var(--preview-height);
   max-width: none; border: 0; background: #fff; transform: scale(var(--preview-scale, 1)); transform-origin: top left;
 }
-.project-laptop__base {
+.project-device__base {
   position: relative; width: 108.7%; height: 15px; margin-left: -4.35%; border: 1px solid #96969e;
   border-radius: 1px 1px 50% 50% / 1px 1px 10px 10px;
   background: linear-gradient(#d3d3d9, #a4a4ae 60%, #73737e); box-shadow: 0 12px 18px -8px rgba(0, 0, 0, .3);
 }
-.project-laptop__base::before {
+.project-device__base::before {
   content: ""; position: absolute; top: -1px; left: 42%; width: 16%; height: 4px;
   border-radius: 0 0 5px 5px; background: #777781;
 }
+.project-device__base[hidden] { display: none; }
+.project-device--tablet { width: min(92%, 400px); }
+.project-device--phone { width: min(92%, 260px); }
+.project-device--tablet .project-device__frame { padding: 16px 10px; border-radius: 20px; }
+.project-device--phone .project-device__frame { padding: 20px 8px 12px; border-radius: 28px; }
+.project-device--tablet .project-device__screen { border-radius: 6px; }
+.project-device--phone .project-device__screen { border-radius: 16px; }
+.project-device--phone .project-device__frame::before { top: 7px; width: 32px; height: 4px; border-radius: 8px; }
 .project-modal h3 { margin: 20px 0 12px; font: 24px var(--f-display); text-transform: uppercase; }
 .project-modal-highlights { display: grid; gap: 8px; }
 .project-modal-highlights li, .package-card li { position: relative; padding-left: 20px; color: var(--ink-2); }
@@ -940,7 +963,13 @@ body.loaded .rv-up { transform: none; }
   .process-steps { grid-template-columns: 1fr; }
   .work-filters { gap: 6px; }
   .project-modal-backdrop { padding: 10px; }
-  .project-modal { max-height: 94vh; border-radius: 18px; }
+  .project-modal { max-height: 94dvh; }
+  .project-modal-header { padding: 18px; gap: 12px; }
+  .project-modal h2 { font-size: 30px; }
+  .project-modal-content { padding: 18px; }
+  .project-device-switch { width: 100%; }
+  .project-device-switch button { flex: 1; min-width: 0; }
+  .project-preview-size { margin-left: auto; }
 }
 
 @media (min-width: 1000px) {

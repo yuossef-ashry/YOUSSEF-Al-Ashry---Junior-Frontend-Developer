@@ -7,7 +7,7 @@ type RouteContext = {
 };
 
 function isPortfolioResource(resource: string): resource is PortfolioResource {
-  return resource in portfolioData;
+  return Object.hasOwn(portfolioData, resource);
 }
 
 export async function GET(_: Request, { params }: RouteContext) {

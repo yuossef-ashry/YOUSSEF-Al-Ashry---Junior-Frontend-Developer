@@ -287,6 +287,7 @@ export default function PortfolioInteractions() {
           sy: photoRect.height * 2.3,
         };
       }
+      drawOrbit(reduceMotion ? 0 : performance.now());
     }
 
     let orbitVisible = false;
@@ -359,11 +360,13 @@ export default function PortfolioInteractions() {
     let mouseY = -100;
     let ringX = -100;
     let ringY = -100;
+    let cursorDirty = false;
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     if (finePointer && cursor && dot && cursorRing) {
       const mouseMove = (event: MouseEvent) => {
         mouseX = event.clientX;
         mouseY = event.clientY;
+        cursorDirty = true;
         cursor.classList.add("is-on");
       };
       const mouseOver = (event: MouseEvent) => {
@@ -426,12 +429,15 @@ export default function PortfolioInteractions() {
     disposers.push(() => window.removeEventListener("resize", onResize));
 
     function loop(time: number) {
-      if (orbitVisible || !geometry) drawOrbit(reduceMotion ? 0 : time);
-      if (finePointer && dot && cursorRing) {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-        cursorRing.style.transform = `translate(${ringX}px, ${ringY}px)`;
+      if (!document.hidden && body.style.overflow !== "hidden") {
+        if ((orbitVisible && !reduceMotion) || !geometry) drawOrbit(reduceMotion ? 0 : time);
+        if (finePointer && dot && cursorRing && (cursorDirty || Math.abs(mouseX - ringX) > .1 || Math.abs(mouseY - ringY) > .1)) {
+          ringX = reduceMotion ? mouseX : ringX + (mouseX - ringX) * .18;
+          ringY = reduceMotion ? mouseY : ringY + (mouseY - ringY) * .18;
+          dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+          cursorRing.style.transform = `translate(${ringX}px, ${ringY}px)`;
+          cursorDirty = false;
+        }
       }
       if (!disposed) frame(loop);
     }

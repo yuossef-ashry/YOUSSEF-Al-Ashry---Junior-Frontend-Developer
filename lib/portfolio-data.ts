@@ -1,15 +1,4 @@
-export type Project = {
-  kind: "website" | "app";
-  category: string;
-  title: string;
-  description: string;
-  image?: string;
-  tags: string[];
-  previewTitle: string;
-  previewRows: string[];
-  liveUrl?: string;
-  sourceUrl: string;
-};
+import type { Project } from "./portfolio-types";
 
 export const projects: Project[] = [
   {
@@ -347,6 +336,7 @@ export const profile = {
   location: "Egypt",
   email: "yaasef0100@gmail.com",
   phone: "+201214858840",
+  phoneDisplay: "+20 121 485 8840",
   availability: "Open to junior frontend roles and focused freelance projects",
   hero: {
     headline: "Junior Frontend Developer",
@@ -356,6 +346,9 @@ export const profile = {
   socialLinks: {
     github: "https://github.com/yuossef-ashry",
     whatsapp: "https://wa.me/201214858840",
+    linkedin: "https://www.linkedin.com/in/youssef-mohammed-al-ashry",
+    instagram: "https://www.instagram.com/youssef_alashry_51/",
+    facebook: "https://www.facebook.com/share/19tf9NdNb6/",
   },
 };
 
@@ -365,6 +358,9 @@ export const navigation = [
   { label: "Journey", href: "#journey" },
   { label: "Toolkit", href: "#toolkit" },
   { label: "Services", href: "#services" },
+  { label: "Details", mobileLabel: "Service details", href: "#service-details" },
+  { label: "Process", href: "#process" },
+  { label: "Packages", href: "#pricing" },
   { label: "Contact", href: "#contact" },
 ];
 
