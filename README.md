@@ -2,6 +2,8 @@
 
 A production-ready personal portfolio built with Next.js, React, and TypeScript.
 
+[View the live portfolio](https://youssef-al-ashry-portfolio.pages.dev/)
+
 ## Commands
 
 ```bash
@@ -28,6 +30,10 @@ lib/
   portfolio-types.ts         Project types and API response validation
   preview-devices.ts         Device sizes for live previews
   site-config.ts             Public origin for metadata, robots, and sitemap
+  static-image-loader.ts     Build-time responsive images for Pages
+scripts/
+  build-pages.mjs            Static export and local image optimization
+cloudflare-pages.json        Pages project name and public URL
 public/
   favicon.png
   images/
@@ -72,7 +78,7 @@ Collections, profile links, and navigation share `lib/portfolio-data.ts` between
 
 `PortfolioWork` requests `/api/projects` in the browser after the initial server render. It keeps the server-provided projects as a fallback, so the work section stays visible even if an API request fails.
 
-Responses are cached for one hour by shared caches. Unknown resources return 404.
+API responses are generated from the content file at build time. On Pages they are served as JSON files at the same URLs, with cache revalidation after deployment. Unknown resources return 404. Updating content requires rebuilding and deploying.
 
 ## Deployment
 
@@ -80,7 +86,9 @@ For Vercel, select the Next.js preset with this folder as the project root. Run 
 
 Set `NEXT_PUBLIC_SITE_URL` to the final public site URL to update the metadata base. `.env.example` lists the optional setting. Local environment files and `.vercel/` are ignored by Git.
 
-On a Node.js host, run `npm ci`, `npm run build`, then `npm start`. Keep image optimization and the `/api/*` routes enabled; this app is not a static HTML export. Dependencies and generated `.next/` output are not source files to commit.
+On a Node.js host, run `npm ci`, `npm run build`, then `npm start`. The normal build retains Next.js image optimization. Dependencies and generated output are not source files to commit.
+
+For Cloudflare Pages, see [deployment and Google setup](docs/cloudflare-pages.md). `npm run build:pages` exports the site to `out/`, generates responsive WebP assets, and preserves the read-only JSON endpoints. `npm run deploy:pages` builds and uploads the result to the configured Pages project.
 
 ## Quality Review
 

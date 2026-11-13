@@ -1,6 +1,11 @@
 import { portfolioData, type PortfolioResource } from "@/lib/portfolio-data";
 
-export const revalidate = 3600;
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return Object.keys(portfolioData).map((resource) => ({ resource }));
+}
 
 type RouteContext = {
   params: Promise<{ resource: string }>;

@@ -35,3 +35,16 @@ Public URL: https://youssef-al-ashry-junior-frontend-de.vercel.app/
 The initial public Lighthouse mobile run scored performance 97, accessibility 96, best practices 100, and SEO 100. This is a lab measurement, not field data or a conversion-rate measurement.
 
 Browser checks used Chrome through Playwright with emulated viewports. Physical iOS/Safari devices and Firefox were not tested. Automated accessibility checks do not replace a manual assistive-technology review. External demos and WhatsApp remain dependent on their own hosting, availability, and policies. Customer conversion needs real visitor/contact data; it cannot be guaranteed by a technical review.
+
+## Cloudflare Pages Release — 2026-11-13
+
+Production URL: https://youssef-al-ashry-portfolio.pages.dev/
+
+- Added a static Pages export while retaining the normal Next.js/Vercel build. ESLint, TypeScript, both build modes, and Git whitespace checks passed.
+- Published the Pages export and verified HTTP 200, the owner's exact Google verification meta tag, the primary canonical URL, robots.txt, sitemap.xml, and ProfilePage/Person JSON-LD on the public site.
+- All ten JSON endpoints returned their expected data and JSON content type. Missing resources returned 404. API responses have noindex headers; the home page has no noindex directive.
+- Generated 126 responsive WebP images at build time (4.23 MiB combined). The mobile hero selected a 32,094-byte WebP with versioned asset caching. SVG project previews retain their original vector source.
+- Re-ran the project/certificate interaction checks on the public Pages URL: laptop/tablet/phone viewports, one preserved iframe, 320px/390px mobile hosts, screenshot fallback, all four landscape certificates, close/Escape/backdrop behavior, focus restoration, filters, menu, theme, and malformed-API fallback passed. No main-page JavaScript errors or third-party font requests were reported.
+- Checked inquiry-form validation with window.open stubbed; no test message was sent.
+- Kept the public verification token in source so future builds retain ownership verification support. The owner confirmed successful Google Search Console ownership verification. Sitemap submission and the indexing request are separate account actions awaiting confirmation.
+- Added the production link to the repository README. Personal GitHub and LinkedIn profile fields are managed separately in those accounts.

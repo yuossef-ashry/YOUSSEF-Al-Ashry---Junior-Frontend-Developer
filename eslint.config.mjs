@@ -8,5 +8,5 @@ export default defineConfig([
       "@next/next/no-page-custom-font": "off",
     },
   },
-  globalIgnores([".next/**", ".next-build/**", "node_modules/**"]),
+  globalIgnores([".next/**", ".next-build/**", "out/**", ".wrangler/**", "node_modules/**"]),
 ]);
