@@ -16,6 +16,7 @@ Public URL: https://youssef-al-ashry-junior-frontend-de.vercel.app/
 - Theme switching handles blocked local storage without a JavaScript error.
 - Corrected the canonical/share domain and added robots.txt and sitemap.xml.
 - Hero content no longer waits for every page resource to finish loading; image sizes and loading priority were adjusted.
+- Fonts are served by Next.js from the site's own origin rather than requested from Google by visitors. The hero portrait no longer waits for an initial entrance movement, and mobile actions share a row to keep the first view compact.
 
 ## Checks Completed
 

@@ -92,7 +92,7 @@ export default function PortfolioContent() {
       </div>
 
       <header className="nav">
-        <a href="#home" className="logo" aria-label="Youssef Al-Ashry — home">
+        <a href="#home" className="logo" aria-label="YA. - Youssef Al-Ashry home">
           YA<span>.</span>
         </a>
         <nav className="nav-links" aria-label="Primary">
@@ -117,7 +117,7 @@ export default function PortfolioContent() {
           alt=""
           width={1122}
           height={1402}
-          sizes="(max-width: 999px) 92vw, 40vw"
+          sizes="(max-width: 999px) min(calc(100vw - 40px), 520px), 40vw"
           priority
           fetchPriority="high"
         />
@@ -148,7 +148,7 @@ export default function PortfolioContent() {
             alt="Portrait of Youssef Al-Ashry"
             width={1122}
             height={1402}
-            sizes="(max-width: 999px) 92vw, 40vw"
+            sizes="(max-width: 999px) min(calc(100vw - 40px), 520px), 40vw"
             priority
             fetchPriority="high"
           />

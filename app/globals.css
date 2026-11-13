@@ -16,9 +16,9 @@
   --red-soft: #FFE3E4;
   --dark: #17171D;
 
-  --f-display: "Anton", "Impact", "Arial Narrow", sans-serif;
-  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --f-display: var(--font-anton), "Impact", "Arial Narrow", sans-serif;
+  --f-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --pad: clamp(20px, 6vw, 96px);
   --ease: cubic-bezier(.7, 0, .2, 1);
@@ -222,7 +222,7 @@ body.menu-open .mobile-menu { clip-path: circle(150% at calc(100% - 42px) 44px);
   transition: transform 1.15s var(--ease), opacity .7s ease;
   filter: drop-shadow(0 30px 40px rgba(18, 18, 22, .12));
 }
-body:not(.loaded) { --y: 12vh; --o: 0; }
+body:not(.loaded) { --y: 0px; --o: 1; }
 
 body[data-scene="home"]    { --x: 23vw;  --s: 1;    --o: 1; }
 body[data-scene="about"]   { --x: -23vw; --s: .94;  --o: 1; }
@@ -879,7 +879,9 @@ body.loaded .rv-up { transform: none; }
   .hero-mphoto { order: 3; }
   .hero-copy { max-width: none; margin-top: 0; }
   .hero-title { font-size: clamp(52px, 15vw, 110px); }
-  .hero-mphoto { position: relative; z-index: 1; width: min(92vw, 520px); margin: 0 auto; }
+  .cta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cta .btn { justify-content: center; min-height: 52px; padding: 14px 12px; font-size: 14px; text-align: center; }
+  .hero-mphoto { position: relative; z-index: 1; width: min(100%, 520px); margin: 0 auto; }
   .hero-meta { position: absolute; left: 20px; right: 20px; bottom: auto; top: auto; display: none; }
   .scroll-cue { display: none; }
 
