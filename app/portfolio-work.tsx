@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import type { Project } from "@/lib/portfolio-data";
 
 type Filter = "all" | "website" | "app";
@@ -20,6 +21,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [projects, setProjects] = useState(initialProjects);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -52,12 +54,55 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
 
   useEffect(() => {
     if (!selectedProject) return;
+
+    const previousOverflow = document.body.style.overflow;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSelectedTitle(null);
     };
+
+    document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [selectedProject]);
+
+  const projectModal = selectedProject ? createPortal(
+    <div
+      className="project-modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) setSelectedTitle(null);
+      }}
+    >
+      <section className="project-modal">
+        <button ref={closeButtonRef} aria-label="Close project details" className="project-modal-close" onClick={() => setSelectedTitle(null)} type="button">×</button>
+        <p className="p-kicker">{selectedProject.category}</p>
+        <h2 className="display" id="project-modal-title">{selectedProject.title}</h2>
+        <p className="project-modal-description">{selectedProject.description}</p>
+        {selectedProject.image && (
+          <div className="project-modal-preview">
+            <Image className="project-modal-image" src={selectedProject.image} alt={`${selectedProject.title} project preview`} fill sizes="(max-width: 760px) 100vw, 760px" />
+          </div>
+        )}
+        <h3>Highlights</h3>
+        <ul className="project-modal-highlights">
+          {selectedProject.previewRows.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <ul className="tags project-modal-tags">{selectedProject.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+        <div className="project-modal-links">
+          {selectedProject.liveUrl && <a className="btn btn-red" href={selectedProject.liveUrl} rel="noreferrer" target="_blank">Live demo ↗</a>}
+          <a className="btn btn-ghost" href={selectedProject.sourceUrl} rel="noreferrer" target="_blank">Source code ↗</a>
+        </div>
+      </section>
+    </div>,
+    document.body,
+  ) : null;
 
   return (
     <>
@@ -113,32 +158,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
         ))}
       </div>
 
-      {selectedProject && (
-        <div className="project-modal-backdrop" onClick={() => setSelectedTitle(null)} role="presentation">
-          <section
-            aria-labelledby="project-modal-title"
-            aria-modal="true"
-            className="project-modal"
-            onClick={(event) => event.stopPropagation()}
-            role="dialog"
-          >
-            <button aria-label="Close project details" className="project-modal-close" onClick={() => setSelectedTitle(null)} type="button">×</button>
-            <p className="p-kicker">{selectedProject.category}</p>
-            <h2 className="display" id="project-modal-title">{selectedProject.title}</h2>
-            <p className="project-modal-description">{selectedProject.description}</p>
-            {selectedProject.image && <Image className="project-modal-image" src={selectedProject.image} alt={`${selectedProject.title} project preview`} width={1200} height={800} sizes="(max-width: 760px) 100vw, 760px" />}
-            <h3>Highlights</h3>
-            <ul className="project-modal-highlights">
-              {selectedProject.previewRows.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-            <ul className="tags project-modal-tags">{selectedProject.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-            <div className="project-modal-links">
-              {selectedProject.liveUrl && <a className="btn btn-red" href={selectedProject.liveUrl} rel="noreferrer" target="_blank">Live demo ↗</a>}
-              <a className="btn btn-ghost" href={selectedProject.sourceUrl} rel="noreferrer" target="_blank">Source code ↗</a>
-            </div>
-          </section>
-        </div>
-      )}
+      {projectModal}
     </>
   );
 }
