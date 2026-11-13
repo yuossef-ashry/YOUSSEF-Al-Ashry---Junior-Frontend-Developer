@@ -225,28 +225,46 @@ export default function PortfolioInteractions() {
     window.addEventListener("portfolio:filter-change", refreshProjects);
     disposers.push(() => window.removeEventListener("portfolio:filter-change", refreshProjects));
 
-    // Journey timeline year.
+    // Fill the journey rail up to the reading position as the page scrolls.
+    const timeline = $(".j-steps") as HTMLElement | null;
     const yearElement = $(".j-year") as HTMLElement | null;
     const steps = $$(".j-step") as HTMLElement[];
     let shownYear = yearElement?.textContent ?? "";
     let pendingYear: string | null = null;
+    let journeyYearTimer: number | undefined;
 
     function updateJourney() {
-      if (!yearElement || steps.length === 0) return;
+      if (!timeline || steps.length === 0) return;
       const line = window.innerHeight * 0.55;
+      const rect = timeline.getBoundingClientRect();
+      const progress = rect.height > 0 ? clamp((line - rect.top) / rect.height, 0, 1) : 0;
+      timeline.style.setProperty("--journey-progress", String(progress));
       let current = steps[0];
       steps.forEach((step) => {
-        if (step.getBoundingClientRect().top < line) current = step;
+        // Each marker's center sits 12px below its step's layout position.
+        const reached = line >= rect.top + step.offsetTop + 12;
+        step.classList.toggle("is-reached", reached);
+        if (reached) current = step;
       });
-      steps.forEach((step) => step.classList.toggle("is-current", step === current));
+      steps.forEach((step) => step.classList.toggle("is-current", step === current && step.classList.contains("is-reached")));
       const year = current.dataset.year;
-      if (!year || year === shownYear || year === pendingYear) return;
+      if (!yearElement || !year) return;
+      if (year === shownYear) {
+        cancelLater(journeyYearTimer);
+        journeyYearTimer = undefined;
+        pendingYear = null;
+        yearElement.classList.remove("swap");
+        return;
+      }
+      if (year === pendingYear) return;
+      cancelLater(journeyYearTimer);
       pendingYear = year;
       yearElement.classList.add("swap");
-      later(() => {
-        yearElement.textContent = pendingYear;
-        shownYear = pendingYear ?? "";
+      journeyYearTimer = later(() => {
+        yearElement.textContent = year;
+        shownYear = year;
         pendingYear = null;
+        journeyYearTimer = undefined;
         yearElement.classList.remove("swap");
       }, 260);
     }
@@ -478,6 +496,7 @@ export default function PortfolioInteractions() {
       resizeTimer = later(() => {
         measureOrbit();
         updateWork();
+        updateJourney();
       }, 120);
     };
     window.addEventListener("resize", onResize);
@@ -515,6 +534,7 @@ export default function PortfolioInteractions() {
       document.fonts.ready.then(() => {
         if (disposed) return;
         measureOrbit();
+        updateJourney();
         movePill($(".nav-links a.is-active") as HTMLAnchorElement | null);
       });
     }
