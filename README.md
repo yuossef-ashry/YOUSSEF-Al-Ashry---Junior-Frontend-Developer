@@ -27,6 +27,7 @@ lib/
   portfolio-data.ts          Content used by the website and API
   portfolio-types.ts         Project types and API response validation
   preview-devices.ts         Device sizes for live previews
+  site-config.ts             Public origin for metadata, robots, and sitemap
 public/
   favicon.png
   images/
@@ -80,3 +81,7 @@ For Vercel, select the Next.js preset with this folder as the project root. Run 
 Set `NEXT_PUBLIC_SITE_URL` to the final public site URL to update the metadata base. `.env.example` lists the optional setting. Local environment files and `.vercel/` are ignored by Git.
 
 On a Node.js host, run `npm ci`, `npm run build`, then `npm start`. Keep image optimization and the `/api/*` routes enabled; this app is not a static HTML export. Dependencies and generated `.next/` output are not source files to commit.
+
+## Quality Review
+
+See [the quality review](docs/quality-review.md) for the tested viewports, corrected issues, and verification limits.

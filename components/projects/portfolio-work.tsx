@@ -125,7 +125,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
                 <div className="d-bar"><i /><i /><i /><span>{project.title.toLowerCase()}</span></div>
                 <div className="d-body">
                   {project.image ? (
-                    <Image className="shot" src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 999px) 100vw, 50vw" />
+                    <Image className="shot" src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 999px) calc(100vw - 40px), 31vw" />
                   ) : (
                     <div className="project-fallback">
                       <span>Project preview</span>

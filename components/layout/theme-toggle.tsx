@@ -6,9 +6,14 @@ export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("youssef-portfolio-theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const nextDark = saved ? saved === "dark" : prefersDark;
+    let nextDark = prefersDark;
+    try {
+      const saved = window.localStorage.getItem("youssef-portfolio-theme");
+      if (saved === "dark" || saved === "light") nextDark = saved === "dark";
+    } catch {
+      nextDark = prefersDark;
+    }
     const frame = window.requestAnimationFrame(() => {
       setDark(nextDark);
       document.body.dataset.theme = nextDark ? "dark" : "light";
@@ -21,7 +26,11 @@ export default function ThemeToggle() {
     const nextDark = !dark;
     setDark(nextDark);
     document.body.dataset.theme = nextDark ? "dark" : "light";
-    window.localStorage.setItem("youssef-portfolio-theme", nextDark ? "dark" : "light");
+    try {
+      window.localStorage.setItem("youssef-portfolio-theme", nextDark ? "dark" : "light");
+    } catch {
+      return;
+    }
   }
 
   return (

@@ -61,12 +61,7 @@ export default function PortfolioInteractions() {
         body.classList.add("loaded");
         $$(".hero .rv").forEach((element) => element.classList.add("in"));
       });
-    if (document.readyState === "complete") markLoaded();
-    else {
-      window.addEventListener("load", markLoaded);
-      disposers.push(() => window.removeEventListener("load", markLoaded));
-    }
-    later(markLoaded, 1800);
+    markLoaded();
     $$(".yr").forEach((element) => {
       element.textContent = String(new Date().getFullYear());
     });
@@ -150,7 +145,7 @@ export default function PortfolioInteractions() {
         ([entry]) => {
           if (entry?.isIntersecting) contact.classList.add("in");
         },
-        { threshold: 0.25 },
+        { threshold: 0, rootMargin: "0px 0px -12% 0px" },
       ).observe(contact);
     }
 
@@ -162,6 +157,14 @@ export default function PortfolioInteractions() {
     const totalNum = $(".w-tot") as HTMLElement | null;
     const bar = $(".w-bar i") as HTMLElement | null;
     let currentProject = 0;
+
+    function syncProjectAccessibility() {
+      projects.forEach((project, index) => {
+        const hidden = isDesktop() && index !== currentProject;
+        project.inert = hidden;
+        project.setAttribute("aria-hidden", String(hidden));
+      });
+    }
 
     function showProject(index: number) {
       if (index === currentProject || !curWrap || !curNum) return;
@@ -177,6 +180,7 @@ export default function PortfolioInteractions() {
         700,
       );
       currentProject = index;
+      syncProjectAccessibility();
       curWrap.classList.add("flip");
       later(() => {
         curNum.textContent = String(index + 1).padStart(2, "0");
@@ -185,6 +189,7 @@ export default function PortfolioInteractions() {
     }
 
     function updateWork() {
+      syncProjectAccessibility();
       if (!isDesktop() || !work || !bar || projects.length === 0) return;
       const rect = work.getBoundingClientRect();
       const total = work.offsetHeight - window.innerHeight;
@@ -315,7 +320,7 @@ export default function PortfolioInteractions() {
         const scale = 0.8 + (0.2 * (depth + 1)) / 2;
         pillElement.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
         pillElement.style.zIndex = depth < -0.05 ? "0" : "3";
-        pillElement.style.opacity = depth < 0 ? (0.5 + 0.5 * (1 + depth)).toFixed(2) : "1";
+        pillElement.style.opacity = "1";
       });
     }
 
@@ -386,12 +391,19 @@ export default function PortfolioInteractions() {
     const menuButton = $(".menu-btn") as HTMLButtonElement | null;
     const menu = $(".mobile-menu") as HTMLElement | null;
     if (menuButton && menu) {
-      const toggleMenu = (open: boolean) => {
+      const main = $("main") as HTMLElement | null;
+      let previousOverflow = "";
+      const toggleMenu = (open: boolean, restoreFocus = true) => {
+        if (open) previousOverflow = body.style.overflow;
         body.classList.toggle("menu-open", open);
+        body.style.overflow = open ? "hidden" : previousOverflow;
+        if (main) main.inert = open;
         menuButton.setAttribute("aria-expanded", String(open));
         menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
         menu.setAttribute("aria-hidden", String(!open));
         menu.inert = !open;
+        if (open) $("a", menu)?.focus({ preventScroll: true });
+        else if (restoreFocus) menuButton.focus({ preventScroll: true });
       };
       const menuButtonClick = () => toggleMenu(!body.classList.contains("menu-open"));
       menuButton.addEventListener("click", menuButtonClick);
@@ -400,6 +412,33 @@ export default function PortfolioInteractions() {
         const menuLinkClick = () => toggleMenu(false);
         link.addEventListener("click", menuLinkClick);
         disposers.push(() => link.removeEventListener("click", menuLinkClick));
+      });
+      const onMenuKeyDown = (event: KeyboardEvent) => {
+        if (!body.classList.contains("menu-open")) return;
+        if (event.key === "Escape") {
+          event.preventDefault();
+          toggleMenu(false);
+        } else if (event.key === "Tab") {
+          const lastLink = $$("a", menu).at(-1);
+          if (event.shiftKey && document.activeElement === menuButton) {
+            event.preventDefault();
+            lastLink?.focus();
+          } else if (!event.shiftKey && document.activeElement === lastLink) {
+            event.preventDefault();
+            menuButton.focus();
+          }
+        }
+      };
+      const desktopQuery = window.matchMedia("(min-width: 1000px)");
+      const onDesktopChange = () => {
+        if (desktopQuery.matches && body.classList.contains("menu-open")) toggleMenu(false, false);
+      };
+      document.addEventListener("keydown", onMenuKeyDown);
+      desktopQuery.addEventListener("change", onDesktopChange);
+      disposers.push(() => {
+        document.removeEventListener("keydown", onMenuKeyDown);
+        desktopQuery.removeEventListener("change", onDesktopChange);
+        if (body.classList.contains("menu-open")) toggleMenu(false, false);
       });
     }
 

@@ -117,12 +117,13 @@ export default function PortfolioContent() {
           alt=""
           width={1122}
           height={1402}
-          sizes="(max-width: 999px) 92vw, 48vw"
+          sizes="(max-width: 999px) 92vw, 40vw"
           priority
+          fetchPriority="high"
         />
       </div>
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section id="home" className="scene hero" data-scene="home">
           <div className="hero-bigname deco" aria-hidden="true"><span>YOUSSEF</span></div>
 
@@ -137,7 +138,7 @@ export default function PortfolioContent() {
             </p>
             <div className="cta rv" style={{ "--d": ".35s" } as CSSProperties}>
               <a href="#work" className="btn btn-red">Explore Projects <i>↗</i></a>
-              <a href="#contact" className="btn btn-ghost">Contact me</a>
+              <a href="#contact-project-form" className="btn btn-ghost">Discuss a project</a>
             </div>
           </div>
 
@@ -147,8 +148,9 @@ export default function PortfolioContent() {
             alt="Portrait of Youssef Al-Ashry"
             width={1122}
             height={1402}
-            sizes="(max-width: 999px) 92vw, 48vw"
+            sizes="(max-width: 999px) 92vw, 40vw"
             priority
+            fetchPriority="high"
           />
 
           <div className="fg hero-meta rv" style={{ "--d": ".5s" } as CSSProperties}>
@@ -338,7 +340,7 @@ export default function PortfolioContent() {
                     <div className={`cert${card.tone ? ` ${card.tone}` : ""}`} style={{ "--i": String(index) } as CSSProperties} key={`${card.title}-${index}`}>
                       <div className="cf">
                         <span className="cert-ok">{card.label}</span>
-                        <h4>{card.title}</h4>
+                        <h3>{card.title}</h3>
                         <strong className="package-price">{card.detail}</strong>
                         <em>{card.summary}</em>
                       </div>
@@ -376,15 +378,12 @@ export default function PortfolioContent() {
         </section>
 
         <section id="contact" className="scene contact" data-scene="contact">
-          <div className="contact-big deco" aria-hidden="true"><span>LET&apos;S</span><span>BUILD.</span></div>
-
           <div className="fg contact-top">
             <p className="label"><b>(09)</b> — Contact</p>
             <h2 className="display contact-head">Make your next idea<br /><span>feel at home online.</span></h2>
             <p className="contact-lede">Tell me what you are working toward. We can shape the right frontend experience, agree on a clear scope, and take it one step at a time.</p>
+            <a className="btn btn-dark" href="#contact-project-form">Discuss your project <i aria-hidden="true">↗</i></a>
           </div>
-
-          <Image className="m-photo contact-mphoto" src="/images/profile/youssef-portrait.webp" alt="" width={1122} height={1402} sizes="(max-width: 999px) 92vw, 48vw" />
 
           <div className="fg contact-bottom">
             <div className="contact-id">

@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site-config";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://my-portfolio-yuossef.vercel.app"),
+  metadataBase: siteUrl,
+  alternates: { canonical: "/" },
   title: "Youssef Al-Ashry — Junior Frontend Developer",
   description:
     "Youssef Al-Ashry — Junior Frontend Developer building responsive, interactive interfaces with JavaScript, React, and TypeScript.",
   openGraph: {
+    type: "website",
+    url: "/",
     title: "Youssef Al-Ashry — Junior Frontend Developer",
     description: "Responsive, interactive interfaces with JavaScript, React, and TypeScript.",
     images: ["/images/profile/youssef-portrait.webp"],
@@ -38,7 +42,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body data-scene="home">{children}</body>
+      <body data-scene="home">
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        {children}
+      </body>
     </html>
   );
 }

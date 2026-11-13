@@ -1,33 +1,49 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 
 export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string }) {
+  const [draftUrl, setDraftUrl] = useState<string | null>(null);
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]');
+    for (const field of requiredFields) {
+      field.setCustomValidity(field.value.trim() ? "" : "Please complete this field.");
+    }
+    if (!form.reportValidity()) return;
+
+    const formData = new FormData(form);
+    const fieldValue = (name: string) => String(formData.get(name) ?? "").trim();
     const details = [
       "Hi Youssef, I'd like to discuss a project.",
-      `Name: ${formData.get("name")}`,
-      `Email or phone: ${formData.get("contact")}`,
-      `Project type: ${formData.get("projectType")}`,
-      `Budget: ${formData.get("budget") || "Not sure yet"}`,
-      `Details: ${formData.get("details")}`,
+      `Name: ${fieldValue("name")}`,
+      `Email or phone: ${fieldValue("contact")}`,
+      `Project type: ${fieldValue("projectType")}`,
+      `Budget: ${fieldValue("budget") || "Not sure yet"}`,
+      `Details: ${fieldValue("details")}`,
     ].join("\n");
 
-    window.open(`${whatsappUrl}?text=${encodeURIComponent(details)}`, "_blank", "noopener,noreferrer");
+    const url = `${whatsappUrl}?text=${encodeURIComponent(details)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setDraftUrl(url);
   }
 
   return (
-    <form className="contact-brief" id="contact-project-form" onSubmit={handleSubmit}>
+    <form className="contact-brief" id="contact-project-form" onSubmit={handleSubmit} onInput={(event) => {
+      const field = event.target;
+      if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) field.setCustomValidity("");
+      setDraftUrl(null);
+    }}>
       <div className="brief-heading">
         <p className="label"><b>PROJECT BRIEF</b> — 01 / 01</p>
         <h2 className="display">What are you building?</h2>
         <p>This opens WhatsApp with a draft for you to review before sending.</p>
       </div>
       <div className="brief-grid">
-        <label>Your name<input autoComplete="name" name="name" required /></label>
-        <label>Email or phone<input autoComplete="email" name="contact" required /></label>
+        <label>Your name<input autoComplete="name" name="name" maxLength={100} required /></label>
+        <label>Email or phone<input autoComplete="email" name="contact" maxLength={200} required /></label>
         <label>Project type
           <select defaultValue="" name="projectType" required>
             <option disabled value="">Choose a project type</option>
@@ -49,9 +65,10 @@ export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string 
             <option>Not sure yet</option>
           </select>
         </label>
-        <label className="brief-details">Project details<textarea name="details" rows={4} required /></label>
+        <label className="brief-details">Project details<textarea name="details" rows={4} maxLength={2000} required /></label>
       </div>
       <button className="btn btn-dark" type="submit">Prepare WhatsApp brief <span>↗</span></button>
+      {draftUrl && <p className="brief-status" role="status">Your brief is ready. <a href={draftUrl} target="_blank" rel="noreferrer">Open WhatsApp ↗</a></p>}
     </form>
   );
 }
