@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import type { Project } from "@/lib/portfolio-data";
+import ProjectPreview from "./project-preview";
 
 type Filter = "all" | "website" | "app";
 
@@ -105,15 +106,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
         <p className="p-kicker">{selectedProject.category}</p>
         <h2 className="display" id="project-modal-title">{selectedProject.title}</h2>
         <p className="project-modal-description">{selectedProject.description}</p>
-        {selectedProject.liveUrl ? (
-          <div className="project-modal-preview project-modal-live-preview">
-            <iframe src={selectedProject.liveUrl} title={`${selectedProject.title} live preview`} loading="eager" />
-          </div>
-        ) : selectedProject.image ? (
-          <div className="project-modal-preview">
-            <Image className="project-modal-image" src={selectedProject.image} alt={`${selectedProject.title} project preview`} fill sizes="(max-width: 760px) 100vw, 760px" />
-          </div>
-        ) : null}
+        {(selectedProject.liveUrl || selectedProject.image) && <ProjectPreview key={selectedProject.title} project={selectedProject} />}
         <h3>Highlights</h3>
         <ul className="project-modal-highlights">
           {selectedProject.previewRows.map((item) => <li key={item}>{item}</li>)}
