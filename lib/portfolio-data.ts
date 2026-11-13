@@ -137,9 +137,11 @@ export const skills = [
   { name: "HTML5", ring: 0, hot: false },
   { name: "CSS3", ring: 0, hot: true },
   { name: "JavaScript", ring: 0, hot: true },
+  { name: "TypeScript", ring: 0, hot: false },
   { name: "React", ring: 1, hot: true },
   { name: "Bootstrap", ring: 1, hot: false },
   { name: "Sass", ring: 1, hot: false },
+  { name: "Tailwind CSS", ring: 1, hot: false },
   { name: "Git", ring: 2, hot: false },
   { name: "GitHub", ring: 2, hot: true },
 ];
