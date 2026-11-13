@@ -135,8 +135,12 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 120;
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px var(--pad);
-  background: var(--bg); color: var(--ink); border-bottom: 1px solid var(--line);
-  transition: color .5s;
+  background: transparent; color: var(--ink); border-bottom: 1px solid transparent;
+  transition: background .25s, border-color .25s, box-shadow .25s, color .5s;
+}
+.nav.is-scrolled, body.menu-open .nav {
+  background: var(--bg); border-bottom-color: var(--line);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
 }
 .logo { font-family: var(--f-display); font-size: 26px; letter-spacing: .02em; }
 .logo span { color: var(--red-text); transition: color .5s; }
@@ -247,7 +251,7 @@ body[data-scene="contact"] { --x: 0vw;   --s: .94;  --o: 0; }
 /* ---------- 00 HERO ---------- */
 .hero { display: flex; flex-direction: column; justify-content: center; padding: 120px var(--pad) 120px; }
 .hero-bigname {
-  top: 9vh; right: -1.5vw;
+  top: max(112px, 9vh); right: -1.5vw;
   font-family: var(--f-display);
   font-size: 23vw; line-height: .8;
   color: var(--red);

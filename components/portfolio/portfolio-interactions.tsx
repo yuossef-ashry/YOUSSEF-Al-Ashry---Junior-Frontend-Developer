@@ -453,12 +453,17 @@ export default function PortfolioInteractions() {
       });
     }
 
+    // Keep the header clear at the top and solid over scrolled content.
+    const header = $(".nav") as HTMLElement | null;
+    const updateNav = () => header?.classList.toggle("is-scrolled", window.scrollY > 24);
+
     // Scroll work and timeline; debounce resize measurements.
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       frame(() => {
+        updateNav();
         updateWork();
         updateJourney();
         ticking = false;
@@ -493,6 +498,7 @@ export default function PortfolioInteractions() {
     }
 
     const start = () => {
+      updateNav();
       measureOrbit();
       drawOrbit(0);
       updateWork();
