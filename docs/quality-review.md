@@ -48,3 +48,5 @@ Production URL: https://youssef-al-ashry-portfolio.pages.dev/
 - Checked inquiry-form validation with window.open stubbed; no test message was sent.
 - Kept the public verification token in source so future builds retain ownership verification support. The owner confirmed successful Google Search Console ownership verification. Sitemap submission and the indexing request are separate account actions awaiting confirmation.
 - Added the production link to the repository README. Personal GitHub and LinkedIn profile fields are managed separately in those accounts.
+
+Public Pages Lighthouse measurements used three mobile runs (performance 82, 92, and 84; median 84, median LCP 2.62s, median TBT 286.5ms) and a confirmation desktop run (performance 98, LCP 0.54s, TBT 0). Accessibility, best practices, and SEO scored 100 in the confirmation runs. An earlier desktop SEO check timed out fetching robots.txt; direct HTTP verification and the confirmation run succeeded. These are lab results on this machine and connection, with variation between runs; they are not a field-performance guarantee.
