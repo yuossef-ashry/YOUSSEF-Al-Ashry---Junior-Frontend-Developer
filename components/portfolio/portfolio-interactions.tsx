@@ -157,34 +157,41 @@ export default function PortfolioInteractions() {
     const totalNum = $(".w-tot") as HTMLElement | null;
     const bar = $(".w-bar i") as HTMLElement | null;
     let currentProject = 0;
+    let projectCounterTimer: number | undefined;
+    let projectLeavingTimer: number | undefined;
 
     function syncProjectAccessibility() {
       projects.forEach((project, index) => {
         const hidden = isDesktop() && index !== currentProject;
-        project.inert = hidden;
-        project.setAttribute("aria-hidden", String(hidden));
+        if (project.inert !== hidden) project.inert = hidden;
+        if (project.getAttribute("aria-hidden") !== String(hidden)) project.setAttribute("aria-hidden", String(hidden));
       });
     }
 
     function showProject(index: number) {
       if (index === currentProject || !curWrap || !curNum) return;
+      cancelLater(projectCounterTimer);
+      cancelLater(projectLeavingTimer);
       projects.forEach((project, projectIndex) => {
         project.classList.toggle("is-leaving", projectIndex === currentProject);
         project.classList.toggle("is-active", projectIndex === index);
       });
-      later(
-        () =>
+      projectLeavingTimer = later(
+        () => {
           projects.forEach((project, projectIndex) => {
             if (projectIndex !== index) project.classList.remove("is-leaving");
-          }),
+          });
+          projectLeavingTimer = undefined;
+        },
         700,
       );
       currentProject = index;
       syncProjectAccessibility();
       curWrap.classList.add("flip");
-      later(() => {
+      projectCounterTimer = later(() => {
         curNum.textContent = String(index + 1).padStart(2, "0");
         curWrap.classList.remove("flip");
+        projectCounterTimer = undefined;
       }, 260);
     }
 
@@ -199,6 +206,10 @@ export default function PortfolioInteractions() {
     }
 
     const refreshProjects = () => {
+      cancelLater(projectCounterTimer);
+      cancelLater(projectLeavingTimer);
+      projectCounterTimer = undefined;
+      projectLeavingTimer = undefined;
       projects = $$(".project") as HTMLElement[];
       currentProject = 0;
       projects.forEach((project, index) => {

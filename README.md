@@ -57,6 +57,8 @@ The preview toolbar switches one live iframe between Laptop (1440 x 900), Tablet
 
 Projects without a `liveUrl` display a screenshot in the laptop frame; responsive controls are disabled because a screenshot cannot show a different responsive layout. Live previews load only after opening a project, with connection hints on hover/focus. External hosts must allow iframe embedding; the Live demo link also opens the project directly.
 
+The toolbar always offers a direct live-project link. A non-blocking loading message offers retry after 12 seconds if loading takes longer. Retry reloads only the iframe and preserves the selected device. Desktop filters return to the first project before the sticky section changes height; compact styles keep project actions visible on short laptop screens.
+
 Project and certificate dialogs share focus handling, Escape/backdrop dismissal, and scroll locking. Project headers stay visible while the preview content scrolls.
 
 ## Content API

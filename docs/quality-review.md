@@ -1,5 +1,34 @@
 # Portfolio Quality Review
 
+## Desktop Projects Follow-up — 2026-11-14
+
+Primary production URL: https://youssef-al-ashry-portfolio.pages.dev/
+
+The previous first-project preview check did not cover the full desktop scrolling sequence. Reproducing that sequence exposed a real defect: projects 2–10 scrolled out of view while their counter continued changing. `body { overflow-x: hidden }` created the wrong scrolling ancestor for the sticky scenes. Using `overflow-x: clip` restores document-based sticky positioning while retaining horizontal clipping.
+
+Additional corrections:
+
+- Adjusted project copy spacing and added compact styles for short desktop viewports so titles, tags, and all actions remain visible.
+- Changing a desktop filter resets to the start of the work section before its height changes. Pending project animation timers are cancelled so an old counter cannot overwrite the new collection's counter.
+- Live previews show a non-blocking loading status. After 12 seconds they offer retry; a direct project link is always available. Retrying preserves the selected device and keeps keyboard focus inside the dialog.
+- Corrected the shared public email to `yassef0100@gmail.com`, as confirmed by the owner. Both the rendered mail links and the JSON API use it.
+
+Final export checks passed:
+
+- ESLint, TypeScript, the normal Next.js production build, and the Cloudflare Pages export.
+- All ten project positions and their clickable actions in Chrome at 1280x720, 1366x768, 1440x900, 1024x600, 1280x600, and 1920x1080; the same ten positions in Edge at 1280x720 and 1024x600 (80 project/viewport checks in total). Filter resets returned to project 01 in each case.
+- All page sections at nine desktop/tablet/mobile viewports listed below, with no detected horizontal overflow, clipped checked headings/actions, broken section links, or main-page JavaScript errors. Contact content appeared and the mobile menu closed with Escape.
+- Automated axe checks found no selected-rule violations in light and dark themes on desktop/mobile. The actual theme control and persistence after reload were checked; blocked storage did not crash the page.
+- Project/certificate close-button, Escape, backdrop, focus restoration, three device sizes, preserved iframe document when switching devices, mobile host sizes, image fallback, filters, all four landscape certificates, inquiry validation, API resources/404s, malformed-API fallback, and corrected email checks passed.
+- A controlled delayed-preview test confirmed loading/slow feedback, direct link, retry, retained phone dimensions, retained dialog focus, and dismissal.
+- `npm audit --omit=dev` reported zero known production dependency vulnerabilities at review time.
+
+Preview control regression tests used deterministic fixture pages; separate real-network checks exercised the nine external live previews. Some external resources were slow, and one direct Modern Developer Portfolio request exceeded 20 seconds even though its iframe rendered content in the browser check. External hosting speed and app functionality are not guaranteed by the portfolio tests. This is why the loading feedback, retry, and direct link remain available. Inquiry tests stubbed `window.open`; no test message was sent.
+
+The owner has since confirmed that Google indexed the primary home page (Search Console reported a successful smartphone crawl on 2026-11-13 at 12:58:18). GitHub and LinkedIn profile website links were also saved and checked separately. A manual reindex request is not a prerequisite for an already indexed page.
+
+## Earlier Review — 2026-11-13
+
 Reviewed on 2026-11-13 against the public site and the corrected production build.
 
 Public URL: https://youssef-al-ashry-junior-frontend-de.vercel.app/

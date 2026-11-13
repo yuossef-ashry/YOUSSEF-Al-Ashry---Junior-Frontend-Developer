@@ -43,6 +43,17 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
     setSelectedTitle(project.title);
   }
 
+  function selectFilter(nextFilter: Filter) {
+    if (nextFilter === filter) return;
+
+    const work = document.getElementById("work");
+    if (work && window.matchMedia("(min-width: 1000px)").matches) {
+      // Reset before the shorter collection changes the sticky section height.
+      window.scrollTo({ top: work.getBoundingClientRect().top + window.scrollY, behavior: "instant" });
+    }
+    setFilter(nextFilter);
+  }
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -83,7 +94,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
               aria-pressed={active}
               className={`work-filter${active ? " is-active" : ""}`}
               key={item.id}
-              onClick={() => setFilter(item.id)}
+              onClick={() => selectFilter(item.id)}
               type="button"
             >
               {item.label}<span>{String(count).padStart(2, "0")}</span>

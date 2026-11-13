@@ -334,7 +334,7 @@ export const profile = {
   name: "Youssef Al-Ashry",
   role: "Junior Frontend Developer",
   location: "Egypt",
-  email: "yaasef0100@gmail.com",
+  email: "yassef0100@gmail.com",
   phone: "+201214858840",
   phoneDisplay: "+20 121 485 8840",
   availability: "Open to junior frontend roles and focused freelance projects",
