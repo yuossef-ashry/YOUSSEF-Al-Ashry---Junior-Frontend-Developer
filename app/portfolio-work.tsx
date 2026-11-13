@@ -85,11 +85,15 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
         <p className="p-kicker">{selectedProject.category}</p>
         <h2 className="display" id="project-modal-title">{selectedProject.title}</h2>
         <p className="project-modal-description">{selectedProject.description}</p>
-        {selectedProject.image && (
+        {selectedProject.liveUrl ? (
+          <div className="project-modal-preview project-modal-live-preview">
+            <iframe src={selectedProject.liveUrl} title={`${selectedProject.title} live preview`} loading="lazy" />
+          </div>
+        ) : selectedProject.image ? (
           <div className="project-modal-preview">
             <Image className="project-modal-image" src={selectedProject.image} alt={`${selectedProject.title} project preview`} fill sizes="(max-width: 760px) 100vw, 760px" />
           </div>
-        )}
+        ) : null}
         <h3>Highlights</h3>
         <ul className="project-modal-highlights">
           {selectedProject.previewRows.map((item) => <li key={item}>{item}</li>)}
