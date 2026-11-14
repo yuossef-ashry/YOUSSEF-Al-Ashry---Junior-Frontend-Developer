@@ -11,6 +11,8 @@ Reworked the opening of the existing Packages section into an interactive offer,
 
 Browser checks covered three package states at seven Chrome viewport/theme combinations from 320px to 1530px and an Edge laptop viewport. They found no checked text clipping, horizontal overflow, or page JavaScript errors. Full package-to-brief journeys passed on desktop/mobile, including preservation of written details, prepared draft content, manual selection changes, project dialog dismissal, and focus restoration. Selected axe checks on the offer passed in desktop light/dark and mobile dark themes. Project-dialog tests used fixture demo pages; `window.open` was stubbed for draft tests, so no message was sent.
 
+Published application commit `c353567` to GitHub and Pages, then confirmed all three offer flows on the public URL at desktop/mobile sizes. The public API resources, canonical, verification tag, robots, sitemap, image delivery, and missing-route checks passed. One public Lighthouse run per device measured performance 89 on mobile (LCP 2.67s, TBT 290ms, CLS 0) and 99 on desktop (LCP 0.59s, TBT 37.5ms, CLS 0). Accessibility, best practices, and SEO scored 100 in both runs. These are individual lab measurements with connection/CPU variation, not field-performance guarantees.
+
 ## Desktop Projects Follow-up — 2026-11-14
 
 Primary production URL: https://youssef-al-ashry-portfolio.pages.dev/
