@@ -31,6 +31,7 @@ lib/
   portfolio-types.ts         Project types and API response validation
   preview-devices.ts         Device sizes for live previews
   site-config.ts             Public origin for metadata, robots, and sitemap
+  site-metadata.ts           Search metadata and connected identity structured data
   static-image-loader.ts     Build-time responsive images for Pages
 scripts/
   build-pages.mjs            Static export and local image optimization

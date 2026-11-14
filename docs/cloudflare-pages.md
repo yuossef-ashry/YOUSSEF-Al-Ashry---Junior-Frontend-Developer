@@ -32,7 +32,7 @@ The export has no runtime Functions, paid image service, or database. It can use
 
 ## Google Search Console
 
-The site includes a title, description, canonical URL, social preview metadata, a ProfilePage/Person JSON-LD description, `robots.txt`, and `sitemap.xml`. The owner's supplied public Google verification token is kept in `lib/site-config.ts` so future deployments retain it. Adding the tag does not itself complete Google's Verify action or submit an indexing request.
+The site includes a title, description, canonical URL, social preview metadata, connected WebSite/ProfilePage/Person/ImageObject JSON-LD, `robots.txt`, and `sitemap.xml`. Search and social metadata live in `lib/site-metadata.ts`; the English and Arabic names come from `profile` in `lib/portfolio-data.ts`. The full English name is visible at the top of the page, and the Arabic name appears in Contact. These identity signals help search engines understand the site, but do not guarantee a particular ranking or result image. The owner's supplied public Google verification token is kept in `lib/site-config.ts` so future deployments retain it. Adding the tag does not itself complete Google's Verify action or submit an indexing request.
 
 1. Open [Google Search Console](https://search.google.com/search-console/).
 2. Add a **URL prefix** property: `https://youssef-al-ashry-portfolio.pages.dev/`. Domain verification requires DNS ownership, so use URL prefix for a shared `pages.dev` domain.

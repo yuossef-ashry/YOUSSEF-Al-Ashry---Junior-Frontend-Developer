@@ -136,7 +136,7 @@ export default function PortfolioContent() {
           <div className="hero-bigname deco" aria-hidden="true"><span>YOUSSEF</span></div>
 
           <div className="fg hero-copy">
-            <p className="label rv"><b>(00)</b> — Junior Frontend Developer</p>
+            <p className="label rv"><b>(00)</b> — {profile.name}</p>
             <h1 className="display hero-title">
               <span className="line"><span className="rv-up">JUNIOR FRONTEND</span></span>
               <span className="line red"><span className="rv-up" style={{ "--d": ".12s" } as CSSProperties}>DEVELOPER</span></span>
@@ -382,6 +382,7 @@ export default function PortfolioContent() {
           <div className="fg contact-bottom">
             <div className="contact-id">
               <p className="display contact-name">Youssef<br />Al-Ashry</p>
+              <p className="contact-name-ar" lang="ar"><bdi>{profile.nameArabic}</bdi></p>
               <p className="contact-open">Open to focused projects and junior frontend roles</p>
               <a href={`mailto:${profile.email}`} className="contact-mail">{profile.email}</a>
             </div>

@@ -897,6 +897,7 @@ body.loaded .rv-up { transform: none; }
 .contact-portrait-mobile { display: none; }
 .contact-open { margin: 8px 0; color: #fff; font-size: 14px; }
 .contact-name { font-size: clamp(44px, 5vw, 86px); line-height: .88; }
+.contact-name-ar { margin-top: 12px; color: #fff; font-size: 16px; }
 .contact-mail { display: inline-block; margin-top: 12px; font-weight: 600; border-bottom: 1.5px solid rgba(255, 255, 255, .6); }
 .contact-links { min-width: 250px; }
 .contact-links a {
