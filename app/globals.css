@@ -112,6 +112,17 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 /* =========================================================
    CURSOR
    ========================================================= */
+.floating-contact { position: fixed; right: calc(24px + env(safe-area-inset-right, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 100; }
+.floating-contact > a { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; background: #00C896; color: #101014; box-shadow: 0 12px 30px -10px rgba(0,200,150,.6), 0 0 0 5px rgba(0,200,150,.08); transition: transform .2s, background .2s, box-shadow .2s; }
+.floating-contact > a:focus-visible { outline: 3px solid var(--ink); outline-offset: 5px; }
+.floating-contact-label { position: absolute; right: calc(100% + 12px); padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--ink); color: var(--paper); font: 600 12px var(--f-body); white-space: nowrap; opacity: 0; transform: translateX(5px); pointer-events: none; transition: opacity .2s, transform .2s; }
+.floating-contact > a:focus-visible .floating-contact-label { opacity: 1; transform: none; }
+@media (hover: hover) {
+  .floating-contact > a:hover { transform: translateY(-3px); background: #06DBA5; box-shadow: 0 15px 35px -10px rgba(0,200,150,.65), 0 0 0 5px rgba(0,200,150,.1); }
+  .floating-contact > a:hover .floating-contact-label { opacity: 1; transform: none; }
+}
+body.menu-open .floating-contact, body[data-scene="contact"] .floating-contact, body:has([role="dialog"][aria-modal="true"]) .floating-contact { display: none; }
+
 .cursor { display: none; }
 @media (pointer: fine) and (min-width: 1000px) {
   .cursor { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: 0; transition: opacity .3s; }
@@ -1015,6 +1026,8 @@ body.loaded .rv-up { transform: none; }
 }
 
 @media (max-width: 560px) {
+  .floating-contact { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .floating-contact > a { width: 52px; height: 52px; }
   .offer-title { font-size: clamp(48px, 14vw, 76px); }
   .offer-intro { font-size: 15px; }
   .offer-actions { gap: 20px; }

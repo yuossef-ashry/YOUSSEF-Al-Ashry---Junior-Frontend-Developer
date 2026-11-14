@@ -5,6 +5,7 @@ import { milestones, navigation, packages, profile, projects, processSteps, serv
 import PortfolioInteractions from "./portfolio-interactions";
 import PortfolioWork from "@/components/projects/portfolio-work";
 import ProjectBriefForm from "@/components/contact/project-brief-form";
+import FloatingContact from "@/components/contact/floating-contact";
 import ThemeToggle from "@/components/layout/theme-toggle";
 import ProjectOffer from "@/components/services/project-offer";
 
@@ -407,6 +408,7 @@ export default function PortfolioContent() {
           </footer>
         </section>
       </main>
+      <FloatingContact whatsappUrl={profile.socialLinks.whatsapp} />
       <PortfolioInteractions />
     </>
   );
