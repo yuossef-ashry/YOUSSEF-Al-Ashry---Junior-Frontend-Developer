@@ -1,4 +1,4 @@
-# Youssef Al-Ashry Portfolio
+# Youssef El-Ashry Portfolio
 
 A production-ready personal portfolio built with Next.js, React, and TypeScript.
 

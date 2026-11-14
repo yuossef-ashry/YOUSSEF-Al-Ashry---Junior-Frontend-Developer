@@ -27,6 +27,7 @@ const milestonesForRing = [
 ];
 
 export default function PortfolioContent() {
+  const [firstName, ...lastName] = profile.name.split(" ");
   const offers = packages.map((item) => {
     const example = projects.find((project) => project.title === item.exampleTitle);
     if (!example) throw new Error(`Unknown example project for package ${item.name}: ${item.exampleTitle}`);
@@ -99,7 +100,7 @@ export default function PortfolioContent() {
       </div>
 
       <header className="nav">
-        <a href="#home" className="logo" aria-label="YA. - Youssef Al-Ashry home">
+        <a href="#home" className="logo" aria-label={`YA. - ${profile.name} home`}>
           YA<span>.</span>
         </a>
         <nav className="nav-links" aria-label="Primary">
@@ -153,7 +154,7 @@ export default function PortfolioContent() {
           <Image
             className="m-photo hero-mphoto"
             src="/images/profile/youssef-portrait.webp"
-            alt="Portrait of Youssef Al-Ashry"
+            alt={`Portrait of ${profile.name}`}
             width={1122}
             height={1402}
             sizes="(max-width: 999px) min(calc(100vw - 40px), 520px), 40vw"
@@ -381,7 +382,7 @@ export default function PortfolioContent() {
 
           <div className="fg contact-bottom">
             <div className="contact-id">
-              <p className="display contact-name">Youssef<br />Al-Ashry</p>
+              <p className="display contact-name">{firstName}<br />{lastName.join(" ")}</p>
               <p className="contact-name-ar" lang="ar"><bdi>{profile.nameArabic}</bdi></p>
               <p className="contact-open">Open to focused projects and junior frontend roles</p>
               <a href={`mailto:${profile.email}`} className="contact-mail">{profile.email}</a>
@@ -405,7 +406,7 @@ export default function PortfolioContent() {
           </div>
 
           <footer className="fg footer">
-            <span>© <span className="yr">2026</span> Youssef Al-Ashry. All rights reserved.</span>
+            <span>© <span className="yr">2026</span> {profile.name}. All rights reserved.</span>
             <a href="#home">Back to top ↑</a>
           </footer>
         </section>

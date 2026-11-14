@@ -356,8 +356,9 @@ export const packages: ServicePackage[] = packageOptions.map((item) => ({
 }));
 
 export const profile = {
-  name: "Youssef Al-Ashry",
+  name: "Youssef El-Ashry",
   nameArabic: "يوسف العشري",
+  alternateNames: ["Youssef El Ashry", "Youssef Al-Ashry", "Youssef Al Ashry"],
   role: "Junior Frontend Developer",
   location: "Egypt",
   email: "yassef0100@gmail.com",

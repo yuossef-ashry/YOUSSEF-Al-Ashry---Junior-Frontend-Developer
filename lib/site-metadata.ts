@@ -8,7 +8,7 @@ const portrait = "/images/profile/youssef-portrait.webp";
 const websiteId = new URL("/#website", siteUrl).href;
 const personId = new URL("/#person", siteUrl).href;
 const imageId = new URL("/#portrait", siteUrl).href;
-const alternateNames = [profile.nameArabic, "Youssef Al Ashry"];
+const alternateNames = [profile.nameArabic, ...profile.alternateNames];
 
 export const portfolioMetadata: Metadata = {
   metadataBase: siteUrl,
