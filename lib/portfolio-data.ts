@@ -1,4 +1,4 @@
-import type { Project } from "./portfolio-types";
+import type { Project, ServicePackage } from "./portfolio-types";
 
 export const projects: Project[] = [
   {
@@ -294,10 +294,16 @@ export const milestones = [
   },
 ];
 
-export const packages = [
+const packageOptions: Omit<ServicePackage, "price">[] = [
   {
+    id: "starter",
     name: "Starter",
-    price: "From EGP 2,500",
+    label: "Portfolio",
+    startingPrice: 2500,
+    openEnded: false,
+    projectType: "Personal website or portfolio",
+    budget: "EGP 2,500–5,000",
+    exampleTitle: "Modern Developer Portfolio",
     description: "A personal portfolio, landing page, or focused launch.",
     features: [
       "One polished, responsive page",
@@ -307,8 +313,14 @@ export const packages = [
     ],
   },
   {
+    id: "professional",
     name: "Professional",
-    price: "From EGP 5,000",
+    label: "Business",
+    startingPrice: 5000,
+    openEnded: false,
+    projectType: "Business website",
+    budget: "EGP 5,000–10,000",
+    exampleTitle: "Ali Emad Portfolio",
     description: "A growing business that needs a stronger web presence.",
     features: [
       "Up to five responsive pages",
@@ -319,8 +331,14 @@ export const packages = [
     ],
   },
   {
+    id: "custom-app",
     name: "Custom web app",
-    price: "From EGP 10,000+",
+    label: "React app",
+    startingPrice: 10000,
+    openEnded: true,
+    projectType: "React application or dashboard",
+    budget: "EGP 10,000+",
+    exampleTitle: "Social Media App",
     description: "A dashboard or React interface shaped around your workflow.",
     features: [
       "Multi-screen React interface",
@@ -331,6 +349,11 @@ export const packages = [
     ],
   },
 ];
+
+export const packages: ServicePackage[] = packageOptions.map((item) => ({
+  ...item,
+  price: `From EGP ${item.startingPrice.toLocaleString("en-US")}${item.openEnded ? "+" : ""}`,
+}));
 
 export const profile = {
   name: "Youssef Al-Ashry",

@@ -11,6 +11,22 @@ export type Project = {
   sourceUrl: string;
 };
 
+export type ServicePackage = {
+  id: string;
+  name: string;
+  label: string;
+  startingPrice: number;
+  openEnded: boolean;
+  price: string;
+  description: string;
+  features: string[];
+  projectType: string;
+  budget: string;
+  exampleTitle: string;
+};
+
+export const packageSelectionEvent = "portfolio:package-select";
+
 export function isProjectList(value: unknown): value is Project[] {
   if (!Array.isArray(value)) return false;
 

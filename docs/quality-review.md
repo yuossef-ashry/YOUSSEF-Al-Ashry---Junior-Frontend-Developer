@@ -1,5 +1,16 @@
 # Portfolio Quality Review
 
+## Interactive Package Offer — 2026-11-14
+
+Reworked the opening of the existing Packages section into an interactive offer, using the portfolio's typography, colors, themes, and related project images. Its existing navigation target remains `#pricing`. The former duplicate price cards were removed; the statistics and rotating milestones remain below the offer.
+
+- Three choices use the existing starting prices: Starter EGP 2,500, Professional EGP 5,000, and Custom web app EGP 10,000+. A single numeric price in the shared data now generates the public price string for the UI and API.
+- Each selection updates the price, features, related real project, and WhatsApp draft. Related examples open in the existing project dialog, including device previews and dismissal/focus handling.
+- Starting a package fills the brief's project type and budget and includes the package in its prepared message. Previously typed visitor details remain intact. Manually changing a selection clears the old package context and draft.
+- No dependencies, AI service, remote font, fabricated discount, delivery guarantee, or additional hosting service was added.
+
+Browser checks covered three package states at seven Chrome viewport/theme combinations from 320px to 1530px and an Edge laptop viewport. They found no checked text clipping, horizontal overflow, or page JavaScript errors. Full package-to-brief journeys passed on desktop/mobile, including preservation of written details, prepared draft content, manual selection changes, project dialog dismissal, and focus restoration. Selected axe checks on the offer passed in desktop light/dark and mobile dark themes. Project-dialog tests used fixture demo pages; `window.open` was stubbed for draft tests, so no message was sent.
+
 ## Desktop Projects Follow-up — 2026-11-14
 
 Primary production URL: https://youssef-al-ashry-portfolio.pages.dev/

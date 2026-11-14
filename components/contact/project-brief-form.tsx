@@ -1,9 +1,31 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { packageSelectionEvent, type ServicePackage } from "@/lib/portfolio-types";
 
-export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string }) {
+type PackageChoice = Pick<ServicePackage, "id" | "name" | "projectType" | "budget">;
+
+export default function ProjectBriefForm({ whatsappUrl, packageChoices }: { whatsappUrl: string; packageChoices: PackageChoice[] }) {
   const [draftUrl, setDraftUrl] = useState<string | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const selectPackage = (event: Event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const choice = packageChoices.find((item) => item.id === event.detail?.id);
+      const form = formRef.current;
+      if (!choice || !form) return;
+      const projectType = form.elements.namedItem("projectType") as HTMLSelectElement | null;
+      const budget = form.elements.namedItem("budget") as HTMLSelectElement | null;
+      if (projectType) projectType.value = choice.projectType;
+      if (budget) budget.value = choice.budget;
+      setSelectedPackage(choice.name);
+      setDraftUrl(null);
+    };
+    window.addEventListener(packageSelectionEvent, selectPackage);
+    return () => window.removeEventListener(packageSelectionEvent, selectPackage);
+  }, [packageChoices]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -18,6 +40,7 @@ export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string 
     const fieldValue = (name: string) => String(formData.get(name) ?? "").trim();
     const details = [
       "Hi Youssef, I'd like to discuss a project.",
+      ...(selectedPackage ? [`Package: ${selectedPackage}`] : []),
       `Name: ${fieldValue("name")}`,
       `Email or phone: ${fieldValue("contact")}`,
       `Project type: ${fieldValue("projectType")}`,
@@ -31,9 +54,10 @@ export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string 
   }
 
   return (
-    <form className="contact-brief" id="contact-project-form" onSubmit={handleSubmit} onInput={(event) => {
+    <form className="contact-brief" id="contact-project-form" ref={formRef} onSubmit={handleSubmit} onInput={(event) => {
       const field = event.target;
       if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) field.setCustomValidity("");
+      if (field instanceof HTMLSelectElement) setSelectedPackage(null);
       setDraftUrl(null);
     }}>
       <div className="brief-heading">
@@ -41,6 +65,7 @@ export default function ProjectBriefForm({ whatsappUrl }: { whatsappUrl: string 
         <h2 className="display">What are you building?</h2>
         <p>This opens WhatsApp with a draft for you to review before sending.</p>
       </div>
+      {selectedPackage && <p className="brief-selection" role="status"><span>Selected package</span><strong>{selectedPackage}</strong><span>You can adjust the details below.</span></p>}
       <div className="brief-grid">
         <label>Your name<input autoComplete="name" name="name" maxLength={100} required /></label>
         <label>Email or phone<input autoComplete="email" name="contact" maxLength={200} required /></label>

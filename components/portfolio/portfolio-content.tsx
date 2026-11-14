@@ -6,6 +6,7 @@ import PortfolioInteractions from "./portfolio-interactions";
 import PortfolioWork from "@/components/projects/portfolio-work";
 import ProjectBriefForm from "@/components/contact/project-brief-form";
 import ThemeToggle from "@/components/layout/theme-toggle";
+import ProjectOffer from "@/components/services/project-offer";
 
 const milestonesForRing = [
   {
@@ -25,6 +26,11 @@ const milestonesForRing = [
 ];
 
 export default function PortfolioContent() {
+  const offers = packages.map((item) => {
+    const example = projects.find((project) => project.title === item.exampleTitle);
+    if (!example) throw new Error(`Unknown example project for package ${item.name}: ${item.exampleTitle}`);
+    return { ...item, example };
+  });
   const ringCards = [
     ...packages.map((item, index) => ({
       label: "Starting price",
@@ -319,11 +325,9 @@ export default function PortfolioContent() {
           </div>
         </section>
 
-        <section id="pricing" className="scene awards" data-scene="awards">
+        <section id="pricing" className="scene awards" data-scene="awards" aria-labelledby="offer-title">
           <div className="fg awards-inner">
-            <p className="label rv"><b>(08)</b> — Pricing</p>
-            <h2 className="display pricing-title rv">Choose your<br /><span className="red">starting point.</span></h2>
-            <p className="pricing-intro rv">Prices are one-time starting estimates in EGP. We agree on the final scope and quote together before work begins.</p>
+            <ProjectOffer offers={offers} whatsappUrl={profile.socialLinks.whatsapp} />
 
             <div className="stats">
               <div className="stat s-red rv" style={{ "--d": "0s" } as CSSProperties}><strong><span data-count="10" data-pad="2">00</span></strong><span>Frontend projects</span></div>
@@ -354,18 +358,6 @@ export default function PortfolioContent() {
               </ul>
             </div>
 
-            <div className="package-grid">
-              {packages.map((item, index) => (
-                <article className={`package-card${index === 1 ? " package-card-featured" : ""}`} key={item.name}>
-                  {index === 1 && <span className="package-popular">Most popular</span>}
-                  <h3>{item.name}</h3>
-                  <strong>{item.price}</strong>
-                  <p>{item.description}</p>
-                  <ul>{item.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-                  <a href="#contact-project-form">Discuss this package ↗</a>
-                </article>
-              ))}
-            </div>
             <div className="package-custom rv">
               <div>
                 <p className="label"><b>HAVE A DIFFERENT KIND OF PROJECT?</b></p>
@@ -406,7 +398,7 @@ export default function PortfolioContent() {
           </div>
 
           <div className="fg brief-wrap">
-            <ProjectBriefForm whatsappUrl={profile.socialLinks.whatsapp} />
+            <ProjectBriefForm whatsappUrl={profile.socialLinks.whatsapp} packageChoices={packages.map(({ id, name, projectType, budget }) => ({ id, name, projectType, budget }))} />
           </div>
 
           <footer className="fg footer">

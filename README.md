@@ -21,6 +21,7 @@ app/                         Next.js routes, metadata, and global styles
 components/
   portfolio/                 Page composition and scroll interactions
   projects/                  Project gallery, details, and device preview
+  services/                  Interactive package offer and related project examples
   certificates/              Certificate viewer
   contact/                   Project inquiry form
   layout/                    Theme control
@@ -62,6 +63,8 @@ The toolbar always offers a direct live-project link. A non-blocking loading mes
 Project and certificate dialogs share focus handling, Escape/backdrop dismissal, and scroll locking. Project headers stay visible while the preview content scrolls.
 
 ## Content API
+
+The Packages section uses `components/services/project-offer.tsx` and the shared `packages` data. Update `startingPrice` in `lib/portfolio-data.ts` to change a price; the displayed `price` string is derived from it for the website and API. `exampleTitle` must match an existing project title. Selecting a package updates its features and real project example, then passes its project type and budget to the contact brief without replacing the visitor's written details. WhatsApp links prepare a draft for the visitor to review.
 
 Collections, profile links, and navigation share `lib/portfolio-data.ts` between the website and the API. Section layout and editorial copy live in `components/portfolio/portfolio-content.tsx`. The API is read-only JSON; changing the data file requires a new deployment.
 
