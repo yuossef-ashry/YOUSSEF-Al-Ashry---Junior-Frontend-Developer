@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createNavHover } from "@/lib/nav-hover";
 
 type OrbitPill = HTMLElement & { phase: number };
 
@@ -81,6 +82,8 @@ export default function PortfolioInteractions() {
     };
     const navLinks = $$(".nav-links a") as HTMLAnchorElement[];
     const pill = $(".nav-pill") as HTMLElement | null;
+    const navHover = createNavHover($(".nav-links"));
+    if (navHover) disposers.push(navHover.dispose);
 
     function movePill(link: HTMLAnchorElement | null) {
       if (!pill) return;
@@ -101,9 +104,12 @@ export default function PortfolioInteractions() {
       navLinks.forEach((link) => {
         const on = link.dataset.nav === key;
         link.classList.toggle("is-active", on);
+        if (on) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
         if (on) active = link;
       });
       movePill(active);
+      navHover?.sync();
       updateContactPortrait();
     }
 
@@ -122,7 +128,10 @@ export default function PortfolioInteractions() {
       if (section !== body) sceneObserver.observe(section);
     });
 
-    const navResize = () => movePill($(".nav-links a.is-active") as HTMLAnchorElement | null);
+    const navResize = () => {
+      movePill($(".nav-links a.is-active") as HTMLAnchorElement | null);
+      navHover?.sync();
+    };
     window.addEventListener("resize", navResize);
     disposers.push(() => window.removeEventListener("resize", navResize));
 
@@ -565,6 +574,7 @@ export default function PortfolioInteractions() {
         updateJourney();
         updateContactPortrait();
         movePill($(".nav-links a.is-active") as HTMLAnchorElement | null);
+        navHover?.sync();
       });
     }
 

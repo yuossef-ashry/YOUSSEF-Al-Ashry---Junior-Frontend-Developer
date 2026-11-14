@@ -104,7 +104,8 @@ export default function PortfolioContent() {
         </a>
         <nav className="nav-links" aria-label="Primary">
           <span className="nav-pill" aria-hidden="true" />
-          {navigation.map((item) => <a href={item.href} data-nav={item.href.slice(1)} key={item.href}>{item.label}</a>)}
+          <span className="nav-hover-pill" aria-hidden="true" />
+          {navigation.map((item) => <a href={item.href} data-nav={item.href.slice(1)} key={item.href}><span className="nav-link-text"><span className="nav-link-label">{item.label}</span><span className="nav-link-echo" aria-hidden="true">{item.label}</span></span></a>)}
         </nav>
         <div className="nav-tools"><ThemeToggle /></div>
         <button className="menu-btn" aria-label="Open menu" aria-expanded="false">
