@@ -104,6 +104,7 @@ export default function PortfolioInteractions() {
         if (on) active = link;
       });
       movePill(active);
+      updateContactPortrait();
     }
 
     const sceneObserver = createObserver(
@@ -140,6 +141,30 @@ export default function PortfolioInteractions() {
     $$(".rv").forEach((element) => revealObserver.observe(element));
 
     const contact = $("#contact") as HTMLElement | null;
+    const stage = $(".stage") as HTMLElement | null;
+    const portrait = $(".stage-img") as HTMLImageElement | null;
+    const contactPortrait = $(".contact-portrait") as HTMLElement | null;
+    const contactHeading = $(".contact-head") as HTMLElement | null;
+
+    function updateContactPortrait() {
+      if (!stage || !portrait || !contactPortrait || !contactHeading) return;
+      const active = isDesktop() && body.dataset.scene === "contact";
+      stage.classList.toggle("is-contact-portrait", active);
+      if (!active || !portrait.offsetWidth || !portrait.offsetHeight) return;
+
+      const slot = contactPortrait.getBoundingClientRect();
+      const heading = contactHeading.getBoundingClientRect();
+      const height = Math.max(0, Math.min(window.innerHeight * .78, slot.bottom - heading.bottom - 24));
+      const scale = Math.min(slot.width / portrait.offsetWidth, height / portrait.offsetHeight);
+      stage.style.setProperty("--contact-x", `${slot.left + slot.width / 2 - window.innerWidth / 2}px`);
+      stage.style.setProperty("--contact-scale", String(scale));
+      // Scroll with the reserved column so the portrait stays above the brief form.
+      stage.style.setProperty("--contact-scroll", `${slot.bottom - window.innerHeight}px`);
+    }
+    if (portrait && !portrait.complete) {
+      portrait.addEventListener("load", updateContactPortrait, { once: true });
+      disposers.push(() => portrait.removeEventListener("load", updateContactPortrait));
+    }
     if (contact) {
       createObserver(
         ([entry]) => {
@@ -482,6 +507,7 @@ export default function PortfolioInteractions() {
       ticking = true;
       frame(() => {
         updateNav();
+        updateContactPortrait();
         updateWork();
         updateJourney();
         ticking = false;
@@ -497,6 +523,7 @@ export default function PortfolioInteractions() {
         measureOrbit();
         updateWork();
         updateJourney();
+        updateContactPortrait();
       }, 120);
     };
     window.addEventListener("resize", onResize);
@@ -522,6 +549,7 @@ export default function PortfolioInteractions() {
       drawOrbit(0);
       updateWork();
       updateJourney();
+      updateContactPortrait();
       frame(loop);
     };
     if (mobilePhoto && !mobilePhoto.complete) {
@@ -535,6 +563,7 @@ export default function PortfolioInteractions() {
         if (disposed) return;
         measureOrbit();
         updateJourney();
+        updateContactPortrait();
         movePill($(".nav-links a.is-active") as HTMLAnchorElement | null);
       });
     }

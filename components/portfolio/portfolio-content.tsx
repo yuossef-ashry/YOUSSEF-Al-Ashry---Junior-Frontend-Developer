@@ -391,6 +391,9 @@ export default function PortfolioContent() {
               <p className="contact-open">Open to focused projects and junior frontend roles</p>
               <a href={`mailto:${profile.email}`} className="contact-mail">{profile.email}</a>
             </div>
+            <div className="contact-portrait" aria-hidden="true">
+              <Image className="contact-portrait-mobile" src="/images/profile/youssef-portrait.webp" alt="" width={1122} height={1402} sizes="(max-width: 999px) 75vw, 1px" />
+            </div>
             <ul className="contact-links">
               <li><a href={`mailto:${profile.email}`}><span>Email me</span><i>↗</i></a></li>
               <li><a href={`tel:${profile.phone}`}><span>Call · {profile.phoneDisplay}</span><i>↗</i></a></li>
