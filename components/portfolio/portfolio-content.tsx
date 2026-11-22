@@ -9,6 +9,8 @@ import FloatingContact from "@/components/contact/floating-contact";
 import ThemeToggle from "@/components/layout/theme-toggle";
 import ProjectOffer from "@/components/services/project-offer";
 
+const heroPortraitSizes = "(max-width: 999px) min(calc(100vw - 40px), 520px), min(64vh, 40vw)";
+
 const milestonesForRing = [
   {
     label: "Achievement · 2025",
@@ -126,7 +128,7 @@ export default function PortfolioContent() {
           alt=""
           width={1122}
           height={1402}
-          sizes="(max-width: 999px) min(calc(100vw - 40px), 520px), 40vw"
+          sizes={heroPortraitSizes}
           priority
           fetchPriority="high"
         />
@@ -159,7 +161,7 @@ export default function PortfolioContent() {
             alt={`Portrait of ${profile.name}`}
             width={1122}
             height={1402}
-            sizes="(max-width: 999px) min(calc(100vw - 40px), 520px), 40vw"
+            sizes={heroPortraitSizes}
             priority
             fetchPriority="high"
           />
