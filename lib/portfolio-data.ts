@@ -6,6 +6,7 @@ export const projects: Project[] = [
     category: "Social networking web app",
     title: "Social Media App",
     image: "/images/projects/media-app.jpg",
+    imageAspectRatio: 1515 / 726,
     description:
       "A social platform for creating an account, managing a profile, sharing posts, and joining conversations through comments.",
     tags: ["Profiles", "Posts", "Comments", "React 19", "TypeScript"],
@@ -84,6 +85,7 @@ export const projects: Project[] = [
     category: "Contact management app",
     title: "Contact Hub",
     image: "/images/projects/contact-hub.jpg",
+    imageAspectRatio: 1535 / 747,
     description:
       "A modern contact manager that turns a traditional phone book into an interactive workspace for organizing, finding, and reaching people.",
     tags: ["Contact manager", "Organization", "Search", "Interactive UI"],

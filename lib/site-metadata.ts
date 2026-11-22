@@ -3,7 +3,7 @@ import { profile } from "@/lib/portfolio-data";
 import { googleSiteVerification, siteUrl } from "@/lib/site-config";
 
 const title = `${profile.name} | ${profile.role}`;
-const description = `${profile.name} — ${profile.role} in ${profile.location}, building responsive websites and interactive interfaces with JavaScript, React, and TypeScript.`;
+const description = `${profile.name}, ${profile.role} in ${profile.location}. Responsive React websites with JavaScript and TypeScript. Explore projects and freelance services.`;
 const portrait = "/images/profile/youssef-portrait.webp";
 const websiteId = new URL("/#website", siteUrl).href;
 const personId = new URL("/#person", siteUrl).href;

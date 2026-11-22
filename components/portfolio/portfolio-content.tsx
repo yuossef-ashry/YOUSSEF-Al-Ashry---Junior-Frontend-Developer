@@ -137,10 +137,12 @@ export default function PortfolioContent() {
           <div className="hero-bigname deco" aria-hidden="true"><span>YOUSSEF</span></div>
 
           <div className="fg hero-copy">
-            <p className="label rv"><b>(00)</b> — {profile.name}</p>
-            <h1 className="display hero-title">
-              <span className="line"><span className="rv-up">JUNIOR FRONTEND</span></span>
-              <span className="line red"><span className="rv-up" style={{ "--d": ".12s" } as CSSProperties}>DEVELOPER</span></span>
+            <h1 className="hero-heading">
+              <span className="label rv hero-name"><b aria-hidden="true">(00)</b> — {profile.name}</span>{" "}
+              <span className="display hero-title">
+                <span className="line"><span className="rv-up">JUNIOR FRONTEND</span></span>{" "}
+                <span className="line red"><span className="rv-up" style={{ "--d": ".12s" } as CSSProperties}>DEVELOPER</span></span>
+              </span>
             </h1>
             <p className="lede rv" style={{ "--d": ".25s" } as CSSProperties}>
               {profile.hero.summary}
@@ -176,7 +178,7 @@ export default function PortfolioContent() {
             <p className="label rv"><b>(01)</b> — About me</p>
             <h2 className="display h2 rv">Clarity in<br /><span className="red">every interaction.</span></h2>
             <div className="about-text">
-              <p className="rv">My frontend work starts with the purpose of a feature: what someone needs to understand or accomplish. I shape that into a clear hierarchy and predictable interactions, then refine the details so the experience works smoothly across screen sizes.</p>
+              <p className="rv">I&apos;m {profile.name}, a junior frontend developer based in {profile.location}. I build responsive websites and React interfaces with JavaScript and TypeScript, with a focus on clear navigation, accessible interactions, and maintainable code.</p>
               <p className="rv">Across my projects, I keep components organized and UI states deliberate so the code remains maintainable as the product grows. I value the balance of visual quality, usability, and reliable behavior because each interface should serve both its users and its product team.</p>
             </div>
 

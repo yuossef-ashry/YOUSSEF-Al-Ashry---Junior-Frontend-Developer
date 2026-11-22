@@ -49,6 +49,7 @@ public/
 - Edit text, links, projects, services, and milestones in `lib/portfolio-data.ts`.
 - Add or replace certificates in `public/images/certificates/`, then update the matching `certificateImage` value in `lib/portfolio-data.ts`.
 - Keep project preview files in `public/images/projects/` and reference them from `lib/portfolio-data.ts`.
+- Project cards use a straight laptop frame. For a screenshot whose proportions differ from 16:9, set its optional `imageAspectRatio` to the source width divided by height to preserve the full image without empty bands.
 - Use `app/globals.css` for visual styling and responsive behavior.
 - Update shared contact links and navigation in `profile` and `navigation` in the data file.
 - The removed template files remain recoverable from Git history. Only current site assets are shipped.
@@ -99,3 +100,5 @@ For Cloudflare Pages, see [deployment and Google setup](docs/cloudflare-pages.md
 ## Quality Review
 
 See [the quality review](docs/quality-review.md) for the tested viewports, corrected issues, and verification limits.
+
+See [the SEO review](docs/seo-review.md) for the current launch checklist, identity links, search observation, and account-dependent checks still to complete.
