@@ -4,6 +4,8 @@ export type Project = {
   title: string;
   description: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   tags: string[];
   previewTitle: string;
   previewRows: string[];

@@ -133,10 +133,10 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
               tabIndex={0}
             >
               <div className="device">
-                <div className="d-bar"><i /><i /><i /><span>{project.title.toLowerCase()}</span></div>
+                <div className="d-bar"><span>{project.title}</span></div>
                 <div className="d-body">
                   {project.image ? (
-                    <Image className="shot" src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 999px) calc(100vw - 40px), 31vw" />
+                    <Image className="shot" src={project.image} alt={`${project.title} project preview`} width={project.imageWidth ?? 1535} height={project.imageHeight ?? 862} sizes="(max-width: 999px) calc(100vw - 40px), 31vw" />
                   ) : (
                     <div className="project-fallback">
                       <span>Project preview</span>

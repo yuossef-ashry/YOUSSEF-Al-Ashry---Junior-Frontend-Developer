@@ -6,6 +6,8 @@ export const projects: Project[] = [
     category: "E-commerce web app",
     title: "FreshCart",
     image: "/images/projects/freshcart.jpg",
+    imageWidth: 1535,
+    imageHeight: 862,
     description:
       "A grocery e-commerce app with account sign-up and sign-in, product browsing with search, category and brand filters, product details, and a shopping cart with live totals.",
     tags: ["E-commerce", "Accounts", "Search & filters", "Shopping cart", "React"],
@@ -19,6 +21,8 @@ export const projects: Project[] = [
     category: "Social networking web app",
     title: "Social Media App",
     image: "/images/projects/media-app.jpg",
+    imageWidth: 1515,
+    imageHeight: 726,
     description:
       "A social platform for creating an account, managing a profile, sharing posts, and joining conversations through comments.",
     tags: ["Profiles", "Posts", "Comments", "React 19", "TypeScript"],
@@ -32,6 +36,8 @@ export const projects: Project[] = [
     category: "Flutter developer portfolio · client project",
     title: "Ali Emad Portfolio",
     image: "/images/projects/ali-emad-portfolio.jpg",
+    imageWidth: 1535,
+    imageHeight: 862,
     description:
       "A commissioned portfolio website for Flutter developer Ali Emad, presenting his mobile apps, technical expertise, experience, services, and contact options.",
     tags: ["Client project", "Mobile apps", "Experience", "Services", "Portfolio"],
@@ -45,6 +51,8 @@ export const projects: Project[] = [
     category: "Photography blog platform",
     title: "Adasa — عدسة",
     image: "/images/projects/adasa.jpg",
+    imageWidth: 1517,
+    imageHeight: 862,
     description:
       "A photography blog for browsing, searching, and filtering articles, switching between grid and list views, and reading full post pages.",
     tags: ["Photography", "Search", "Categories", "Grid / list", "React 19"],
@@ -58,6 +66,8 @@ export const projects: Project[] = [
     category: "Smart nutrition tracker",
     title: "NutriPlan",
     image: "/images/projects/personalized-nutrition.jpg",
+    imageWidth: 1535,
+    imageHeight: 862,
     description:
       "A nutrition tracking web app for discovering meals, exploring food products, and monitoring daily calories and macronutrients in one place.",
     tags: ["Meal discovery", "Food products", "Calories", "Macronutrients"],
@@ -72,6 +82,8 @@ export const projects: Project[] = [
     category: "Live space data dashboard",
     title: "Cosmos Space Dashboard",
     image: "/images/projects/space-dashboard.jpg",
+    imageWidth: 1535,
+    imageHeight: 862,
     description:
       "An interactive space dashboard that brings NASA's daily astronomy image, upcoming launches, and Solar System planet data together.",
     tags: ["NASA image", "Launches", "Planet data", "Dashboard", "Responsive UI"],
@@ -85,6 +97,8 @@ export const projects: Project[] = [
     category: "Random recipe discovery",
     title: "What's for Dinner?",
     image: "/images/projects/whats-for-dinner.jpg",
+    imageWidth: 1535,
+    imageHeight: 862,
     description:
       "An interactive recipe discovery app that serves a fresh meal idea and gives you the details you need to decide what to cook.",
     tags: ["Recipe discovery", "Meal ideas", "Ingredients", "Interactive UI"],
