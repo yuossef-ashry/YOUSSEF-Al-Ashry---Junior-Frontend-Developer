@@ -4,7 +4,8 @@ export type Project = {
   title: string;
   description: string;
   image?: string;
-  imageAspectRatio?: number;
+  imageWidth?: number;
+  imageHeight?: number;
   tags: string[];
   previewTitle: string;
   previewRows: string[];
@@ -39,7 +40,8 @@ export function isProjectList(value: unknown): value is Project[] {
       && Array.isArray(item.tags) && item.tags.every((tag: unknown) => typeof tag === "string")
       && Array.isArray(item.previewRows) && item.previewRows.every((row: unknown) => typeof row === "string")
       && (item.image === undefined || typeof item.image === "string")
-      && (item.imageAspectRatio === undefined || (typeof item.imageAspectRatio === "number" && Number.isFinite(item.imageAspectRatio) && item.imageAspectRatio > 0))
+      && (item.imageWidth === undefined || (typeof item.imageWidth === "number" && Number.isFinite(item.imageWidth) && item.imageWidth > 0))
+      && (item.imageHeight === undefined || (typeof item.imageHeight === "number" && Number.isFinite(item.imageHeight) && item.imageHeight > 0))
       && (item.liveUrl === undefined || typeof item.liveUrl === "string");
   });
 }

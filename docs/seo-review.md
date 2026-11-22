@@ -16,7 +16,7 @@ Preferred name: **Youssef El-Ashry**. The earlier Al-Ashry spelling and Arabic n
 | Sitemap and robots | Both public files return HTTP 200 with the correct content types and primary URL. Crawling is allowed. This does not verify Search Console's processing status. | Technical checks passed |
 | Speed and mobile | Responsive WebP generation, local font delivery, and reduced-motion support are present. Current PageSpeed API request returned HTTP 429; no new Lighthouse score or field CWV result is claimed. | Partially measured |
 | Structured data | WebSite, ProfilePage, Person, and ImageObject are connected by IDs and identify the same person, portrait, and canonical site. | Verified |
-| Project content | All ten project articles, descriptions, technologies, demo/source links, and existing highlights are present in the exported HTML. | Verified |
+| Project content | All seven selected project articles, descriptions, technologies, demo/source links, and existing highlights are present in the exported HTML. | Verified |
 | Professional profile links | GitHub's display name and Profile README now use the preferred name. The README links directly to the portfolio. LinkedIn account edits were not verified. | GitHub completed; LinkedIn pending |
 | Contact | Email, phone, WhatsApp, and the project brief remain available. No test inquiry or message was sent. | Links verified |
 | Monitoring | Search Console remains the source for actual impressions, clicks, query data, and position. No current private report was available in this review. | Account access needed |
@@ -27,16 +27,16 @@ Google's [SEO starter guide](https://developers.google.com/search/docs/fundament
 
 - Replaced the rotated browser card with a straight laptop frame and a light base, using the existing theme colors.
 - Increased the desktop preview width from 31vw to 38vw and updated the image's responsive size hint.
-- Preserved whole-image previews. `imageAspectRatio` is optional project data for images whose actual proportions differ from the default 16:9; Social Media App and Contact Hub specify their source proportions.
+- Preserved whole-image previews using the current project data's `imageWidth` and `imageHeight`. The image defines the screen height without stretching, cropping, or artificial bands.
 - Removed duplicate per-project frame styling. The shared frame supports light/dark themes and the existing mobile project list.
 - Preserved project-card activation, the live iframe, device controls, close behavior, and focus restoration.
 
 ## Validation
 
 - ESLint and the static production build, including TypeScript, passed.
-- The export retained the portfolio, API, and metadata routes and generated 126 responsive image variants, totaling 4.23 MiB.
-- Checked the exported home page for one H1 containing the preferred name and role, ten server-rendered project articles, structured identity data, large-image-preview permission, ownership verification, and the primary sitemap URL.
-- Browser layout checks at 1440x900, 1280x720, 390x844, and 320x740 found no horizontal overflow. The desktop website filter returned three projects with visible action links on the 720px-high screen.
+- The export retained the portfolio, API, and metadata routes and build-time responsive image generation.
+- Checked the exported home page for one H1 containing the preferred name and role, seven server-rendered project articles, structured identity data, large-image-preview permission, ownership verification, and the primary sitemap URL.
+- Browser layout checks cover desktop and mobile layouts, including a 720px-high laptop and a 320px-wide phone. The current collection starts with FreshCart and preserves the seven-project order and package examples from the latest source.
 - Clicking a project frame opened its details. Tablet showed 820x1180; Phone showed 390x844 with one iframe. Closing removed the dialog and returned keyboard focus to the project card.
 - Checked both light and dark themes. Saved desktop/mobile screenshots as private review artifacts rather than shipping them in the public site.
 
