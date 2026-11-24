@@ -185,10 +185,10 @@ export default function PortfolioInteractions() {
 
     // Sticky project stepper.
     const work = $("#work") as HTMLElement | null;
-    let projects = $$(".project") as HTMLElement[];
+    const stickyWork = work && $(".work-sticky", work);
+    let projects = work ? $$(".project", work) : [];
     const curWrap = $(".w-cur") as HTMLElement | null;
     const curNum = $(".w-cur span") as HTMLElement | null;
-    const totalNum = $(".w-tot") as HTMLElement | null;
     const bar = $(".w-bar i") as HTMLElement | null;
     let currentProject = 0;
     let projectCounterTimer: number | undefined;
@@ -200,6 +200,10 @@ export default function PortfolioInteractions() {
         if (project.inert !== hidden) project.inert = hidden;
         if (project.getAttribute("aria-hidden") !== String(hidden)) project.setAttribute("aria-hidden", String(hidden));
       });
+    }
+
+    function projectPosition(index: number) {
+      return projects[index]?.dataset.projectPosition?.padStart(2, "0") ?? "00";
     }
 
     function showProject(index: number) {
@@ -223,20 +227,35 @@ export default function PortfolioInteractions() {
       syncProjectAccessibility();
       curWrap.classList.add("flip");
       projectCounterTimer = later(() => {
-        curNum.textContent = String(index + 1).padStart(2, "0");
+        curNum.textContent = projectPosition(index);
         curWrap.classList.remove("flip");
         projectCounterTimer = undefined;
       }, 260);
     }
 
+    function workProgress() {
+      if (!isDesktop() || !work || !stickyWork || projects.length === 0) return 0;
+      const { height, top } = work.getBoundingClientRect();
+      const travel = height - stickyWork.getBoundingClientRect().height;
+      return travel > 0 ? clamp(-top / travel, 0, 1) : 0;
+    }
+
+    function projectAtProgress(progress: number) {
+      return Math.max(0, Math.min(projects.length - 1, Math.floor(progress * projects.length)));
+    }
+
+    function syncWorkProgress(progress: number) {
+      if (bar) bar.style.transform = `scaleX(${progress})`;
+      // The reveal control belongs to the pinned step, before it scrolls away into Journey.
+      work?.classList.toggle("is-past-pin", progress === 1);
+    }
+
     function updateWork() {
       syncProjectAccessibility();
-      if (!isDesktop() || !work || !bar || projects.length === 0) return;
-      const rect = work.getBoundingClientRect();
-      const total = work.offsetHeight - window.innerHeight;
-      const progress = total > 0 ? clamp(-rect.top / total, 0, 1) : 0;
-      bar.style.transform = `scaleX(${progress})`;
-      showProject(Math.min(projects.length - 1, Math.floor(progress * projects.length)));
+      if (!isDesktop() || !bar || projects.length === 0) return;
+      const progress = workProgress();
+      syncWorkProgress(progress);
+      showProject(projectAtProgress(progress));
     }
 
     const refreshProjects = () => {
@@ -244,20 +263,21 @@ export default function PortfolioInteractions() {
       cancelLater(projectLeavingTimer);
       projectCounterTimer = undefined;
       projectLeavingTimer = undefined;
-      projects = $$(".project") as HTMLElement[];
-      currentProject = 0;
+      projects = work ? $$(".project", work) : [];
+      // Each project keeps the same scroll distance when more are appended.
+      const progress = workProgress();
+      currentProject = projectAtProgress(progress);
       projects.forEach((project, index) => {
         project.classList.remove("is-leaving");
-        project.classList.toggle("is-active", index === 0);
+        project.classList.toggle("is-active", index === currentProject);
       });
-      if (curNum) curNum.textContent = "01";
+      if (curNum) curNum.textContent = projectPosition(currentProject);
       if (curWrap) curWrap.classList.remove("flip");
-      if (totalNum) totalNum.textContent = `/ ${String(projects.length).padStart(2, "0")}`;
-      if (bar) bar.style.transform = "scaleX(0)";
-      updateWork();
+      syncWorkProgress(progress);
+      syncProjectAccessibility();
     };
-    window.addEventListener("portfolio:filter-change", refreshProjects);
-    disposers.push(() => window.removeEventListener("portfolio:filter-change", refreshProjects));
+    window.addEventListener("portfolio:work-change", refreshProjects);
+    disposers.push(() => window.removeEventListener("portfolio:work-change", refreshProjects));
 
     // Fill the journey rail up to the reading position as the page scrolls.
     const timeline = $(".j-steps") as HTMLElement | null;

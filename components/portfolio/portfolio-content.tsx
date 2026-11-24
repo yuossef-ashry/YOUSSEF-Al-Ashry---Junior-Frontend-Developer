@@ -193,19 +193,7 @@ export default function PortfolioContent() {
           </div>
         </section>
 
-        <section id="work" className="scene work" data-scene="work" style={{ "--n": String(projects.length) } as CSSProperties}>
-          <div className="work-sticky">
-            <div className="work-head">
-              <p className="label"><b>(02)</b> — Selected work</p>
-              <div className="w-counter display" aria-hidden="true">
-                <span className="w-cur"><span>01</span></span><span className="w-tot">/ {String(projects.length).padStart(2, "0")}</span>
-              </div>
-              <div className="w-bar"><i /></div>
-            </div>
-
-            <PortfolioWork initialProjects={projects} />
-          </div>
-        </section>
+        <PortfolioWork initialProjects={projects} />
 
         <section id="journey" className="scene journey" data-scene="journey">
           <div className="j-year-col deco" aria-hidden="true">

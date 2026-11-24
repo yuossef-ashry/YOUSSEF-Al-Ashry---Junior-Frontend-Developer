@@ -340,7 +340,7 @@ body.loaded .rv-up { transform: none; }
 .red-fact dt, .red-fact dd small { color: #fff; }
 
 /* ---------- 02 WORK ---------- */
-.work { height: calc(var(--n) * 90vh + 100vh); }
+.work { height: calc(var(--n) * 90vh + 100vh); height: calc(var(--n) * 90vh + 100svh); }
 .work-sticky {
   position: sticky; top: 0; z-index: 2;
   height: 100vh; height: 100svh;
@@ -369,6 +369,17 @@ body.loaded .rv-up { transform: none; }
 .work-filter span { color: var(--muted); font: 11px var(--f-mono); }
 .work-filter.is-active { color: #fff; background: var(--red); border-color: var(--red); }
 .work-filter.is-active span { color: #fff; }
+
+.work-more {
+  position: absolute; z-index: 3; left: 56vw; bottom: clamp(20px, 6vh, 56px);
+  translate: -50% 0; min-height: 44px; padding: 10px 18px; border: 0; cursor: pointer;
+}
+.work-more:focus-visible { outline: 2px solid var(--red-text); outline-offset: 4px; }
+.work-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (min-width: 1000px) {
+  .work.is-past-pin .work-more,
+  .projects:not(:has(.project:last-child.is-active)) + .work-more { display: none; }
+}
 
 .projects { position: absolute; inset: 0; }
 .project { position: absolute; inset: 0; pointer-events: none; }
@@ -951,6 +962,7 @@ body.loaded .rv-up { transform: none; }
   .work-filters { position: relative; top: auto; left: auto; margin: 0 0 32px; }
   .work-filter { padding: 8px 12px; font-size: 11px; }
   .projects { position: static; display: grid; gap: 64px; }
+  .work-more { position: static; translate: none; margin-top: 32px; }
   .project { position: static; pointer-events: auto; display: flex; flex-direction: column-reverse; gap: 26px; }
   .p-copy, .p-visual { position: static; width: auto; transform: none; opacity: 1; }
   .device, .project.is-leaving .device { opacity: 1; transform: none; }
