@@ -75,7 +75,7 @@ export default function ProjectBriefForm({ whatsappUrl, packageChoices }: { what
             <option>Personal website or portfolio</option>
             <option>Business website</option>
             <option>React application or dashboard</option>
-            <option>Junior Frontend Developer role</option>
+            <option>Frontend Developer role</option>
             <option>Collaboration</option>
             <option>Something else</option>
           </select>

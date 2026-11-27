@@ -25,9 +25,15 @@ export default function ProjectOffer({ offers, whatsappUrl }: { offers: Offer[];
   return (
     <div className="project-offer">
       <div className="offer-story">
-        <p className="label"><b>(08)</b> — Your next launch</p>
+        <p className="label"><b>(07)</b> — Your next launch</p>
         <h2 className="display offer-title" id="offer-title">Your idea.<br />Built to<br /><span className="red">stand out.</span></h2>
-        <p className="offer-intro">A personal portfolio, a business website, or a React application. Let&apos;s turn what you have in mind into an experience people enjoy using.</p>
+        <button className="offer-example" type="button" onClick={() => setExampleOpen(true)} aria-label={`View ${selected.example.title} project example`} key={selected.example.title}>
+          <span className="offer-example-image">
+            {selected.example.image && <Image src={selected.example.image} alt="" fill sizes="120px" />}
+          </span>
+          <span><span className="offer-caption">A look at the work</span><strong>{selected.example.title}</strong><span className="offer-example-link">Explore this project <ArrowUpRight size={14} aria-hidden="true" /></span></span>
+          <span className="offer-example-number" aria-hidden="true">0{offers.indexOf(selected) + 1}</span>
+        </button>
         <div className="offer-actions">
           <a className="btn btn-red" href={whatsappDraft.href} target="_blank" rel="noreferrer"><MessageCircle size={18} aria-hidden="true" />Let&apos;s talk<ArrowUpRight size={18} aria-hidden="true" /></a>
           <a className="offer-work-link" href="#work">Explore my work <ArrowUpRight size={17} aria-hidden="true" /></a>
@@ -37,13 +43,6 @@ export default function ProjectOffer({ offers, whatsappUrl }: { offers: Offer[];
           <span><Smartphone size={16} aria-hidden="true" />Every screen</span>
           <span><Code2 size={16} aria-hidden="true" />Thoughtful code</span>
         </div>
-        <button className="offer-example" type="button" onClick={() => setExampleOpen(true)} aria-label={`View ${selected.example.title} project example`} key={selected.example.title}>
-          <span className="offer-example-image">
-            {selected.example.image && <Image src={selected.example.image} alt="" fill sizes="120px" />}
-          </span>
-          <span><span className="offer-caption">A look at the work</span><strong>{selected.example.title}</strong><span className="offer-example-link">Explore this project <ArrowUpRight size={14} aria-hidden="true" /></span></span>
-          <span className="offer-example-number" aria-hidden="true">0{offers.indexOf(selected) + 1}</span>
-        </button>
       </div>
 
       <div className="offer-panel">

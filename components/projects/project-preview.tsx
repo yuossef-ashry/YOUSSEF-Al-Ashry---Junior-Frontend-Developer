@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
-import { Laptop, Tablet, Smartphone } from "lucide-react";
+import { BatteryFull, Laptop, Signal, Smartphone, Tablet, Wifi } from "lucide-react";
 import type { Project } from "@/lib/portfolio-types";
 import { previewDevices, type PreviewDevice } from "@/lib/preview-devices";
 
@@ -19,6 +19,8 @@ export default function ProjectPreview({ project }: ProjectPreviewProps) {
   const liveProjectLinkRef = useRef<HTMLAnchorElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const device = previewDevices.find((item) => item.id === deviceId) ?? previewDevices[0];
+  const hasDeviceChrome = device.id !== "laptop";
+  const previewHost = project.liveUrl && URL.canParse(project.liveUrl) ? new URL(project.liveUrl).hostname : "";
 
   function retryPreview() {
     liveProjectLinkRef.current?.focus({ preventScroll: true });
@@ -87,28 +89,49 @@ export default function ProjectPreview({ project }: ProjectPreviewProps) {
         "--preview-ratio": `${device.width} / ${device.height}`,
       } as CSSProperties}>
         <div className="project-device__frame">
-          <div className="project-device__screen" ref={screenRef}>
-            {project.liveUrl ? (
-              <iframe
-                key={attempt}
-                className="project-device__viewport"
-                src={project.liveUrl}
-                title={`${project.title} live preview`}
-                width={device.width}
-                height={device.height}
-                loading="eager"
-                onLoad={() => setPreviewState("ready")}
-                onError={() => setPreviewState("slow")}
-              />
-            ) : project.image ? (
-              <Image
-                className="project-modal-image"
-                src={project.image}
-                alt={`${project.title} project preview`}
-                fill
-                sizes="(max-width: 1120px) 90vw, 1000px"
-              />
-            ) : null}
+          <div className="project-device__glass">
+            {hasDeviceChrome && (
+              <div className="project-device__top" aria-hidden="true">
+                <div className="project-device__status">
+                  <span>9:41</span>
+                  <span className="project-device__status-icons">
+                    <Signal size={10} />
+                    <Wifi size={10} />
+                    <BatteryFull size={13} />
+                  </span>
+                </div>
+                {device.id === "tablet" && previewHost && <span className="project-device__address">{previewHost}</span>}
+              </div>
+            )}
+            <div className="project-device__screen" ref={screenRef}>
+              {project.liveUrl ? (
+                <iframe
+                  key={attempt}
+                  className="project-device__viewport"
+                  src={project.liveUrl}
+                  title={`${project.title} live preview`}
+                  width={device.width}
+                  height={device.height}
+                  loading="eager"
+                  onLoad={() => setPreviewState("ready")}
+                  onError={() => setPreviewState("slow")}
+                />
+              ) : project.image ? (
+                <Image
+                  className="project-modal-image"
+                  src={project.image}
+                  alt={`${project.title} project preview`}
+                  fill
+                  sizes="(max-width: 1120px) 90vw, 1000px"
+                />
+              ) : null}
+            </div>
+            {hasDeviceChrome && (
+              <div className="project-device__bottom" aria-hidden="true">
+                {device.id === "phone" && previewHost && <span className="project-device__address">{previewHost}</span>}
+                <span className="project-device__home" />
+              </div>
+            )}
           </div>
         </div>
         <div className="project-device__base" aria-hidden="true" hidden={device.id !== "laptop"} />

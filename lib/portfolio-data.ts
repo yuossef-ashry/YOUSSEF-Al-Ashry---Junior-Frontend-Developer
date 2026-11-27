@@ -1,4 +1,4 @@
-import type { Project, ServicePackage } from "./portfolio-types";
+import type { Project, ServiceDetail, ServicePackage } from "./portfolio-types";
 
 export const projects: Project[] = [
   {
@@ -10,7 +10,7 @@ export const projects: Project[] = [
     imageHeight: 862,
     description:
       "A grocery e-commerce app with account sign-up and sign-in, product browsing with search, category and brand filters, product details, and a shopping cart with live totals.",
-    tags: ["E-commerce", "Accounts", "Search & filters", "Shopping cart", "React"],
+    tags: ["E-commerce", "Accounts", "Search & filters", "Shopping cart", "React", "Next.js"],
     previewTitle: "Fresh groceries to your door",
     previewRows: ["Sign up and sign in", "Browse and search products", "Categories and brands", "Cart with live totals"],
     liveUrl: "https://freshcart-e-commerce-web-applicatio.vercel.app/",
@@ -122,91 +122,101 @@ export const skills = [
   { name: "GitHub", ring: 2, hot: true },
 ];
 
-export const services = [
+export const serviceDetails: ServiceDetail[] = [
   {
+    id: "websites",
     number: "01",
     letter: "B",
-    layer: "Web presence",
-    title: "Business websites",
-    description:
-      "Modern, responsive pages that showcase your brand, explain your services, and help customers get in touch.",
+    layer: "Business presence",
+    title: "Business websites & portfolios",
+    exampleTitle: "Ali Emad Portfolio",
+    summary: "A clear online home for your brand, services, and work.",
+    description: "A professional website that reflects your brand and helps visitors become customers. Suitable for companies, offices, clinics, factories, service businesses, tourism, and real estate; personal portfolios can present your work, skills, achievements, and professional identity. Available in Arabic, English, or both, with full right-to-left support.",
+    items: [
+      "Custom website design and development",
+      "Company and service pages",
+      "Project and portfolio galleries",
+      "Contact and WhatsApp integration",
+      "Arabic and RTL support",
+      "Responsive layouts and SEO-friendly structure",
+    ],
     tone: "",
   },
   {
+    id: "web-apps",
     number: "02",
-    letter: "P",
-    layer: "Digital identity",
-    title: "Portfolios & interactive websites",
-    description:
-      "Personal websites that present your work, skills, achievements, and professional identity through thoughtful design.",
+    letter: "R",
+    layer: "Interactive systems",
+    title: "Web applications",
+    exampleTitle: "Cosmos Space Dashboard",
+    summary: "Online systems that organize your day-to-day work.",
+    description: "One clear system for day-to-day work: bookings, customers, staff, orders, and data, shaped around how your business runs.",
+    items: [
+      "Reusable React components",
+      "Forms and data visualization",
+      "API integration",
+      "Responsive application layouts",
+      "Connects with your existing backend or developer",
+    ],
+    details: [
+      {
+        title: "Business systems",
+        description: "A system shaped around your process, with clear role-aware screens and room to grow.",
+        items: ["Bookings", "Customers", "Properties", "Staff", "Orders", "Business data"],
+      },
+      {
+        title: "Dashboards & access",
+        description: "Manage content and daily operations from one organized workspace, with analytics in one view.",
+        items: ["Content and users", "Products, orders, and bookings", "Records and analytics", "Administrator, staff, customer, and manager roles"],
+      },
+    ],
     tone: "",
   },
   {
+    id: "commerce",
     number: "03",
-    letter: "R",
-    layer: "Frontend products",
-    title: "Web applications & platforms",
-    description:
-      "Interactive React experiences that simplify processes, improve user experience, and bring digital ideas to life.",
-    tone: "layer-red",
-  },
-  {
-    number: "04",
     letter: "E",
-    layer: "Commerce",
-    title: "E-commerce websites",
-    description:
-      "Online stores that present products clearly and make shopping easier for your customers.",
-    tone: "layer-dark",
-  },
-  {
-    number: "05",
-    letter: "D",
-    layer: "Business workflows",
-    title: "Dashboards & custom solutions",
-    description:
-      "Organized dashboards and custom interfaces for information, teams, bookings, and day-to-day operations.",
-    tone: "layer-dark",
+    layer: "Practical workflows",
+    title: "Commerce & custom systems",
+    exampleTitle: "FreshCart",
+    summary: "Storefronts, bookings, and connected workflows in one place.",
+    description: "Build useful customer journeys and behind-the-scenes tools that help your business present products, accept requests, and stay organized.",
+    items: [
+      "Products, categories, and search",
+      "Cart and checkout interfaces",
+      "Orders and customer views",
+      "Bookings and appointment management",
+      "Custom workflows and integrations",
+    ],
+    details: [
+      {
+        title: "Online stores",
+        description: "Present products, receive orders, and keep sales organized.",
+        items: ["Promotions", "Store administration"],
+      },
+      {
+        title: "Bookings & appointments",
+        description: "For clinics, restaurants, venues, service businesses, and consultations. Keep availability organized and make booking clear for customers.",
+        items: ["Availability management", "Fewer scheduling conflicts"],
+      },
+      {
+        title: "Custom scope",
+        description: "Combine a website, system, and dashboard around your workflow when no ready-made package fits.",
+        items: ["Clarify requirements", "Map the workflow", "Build a practical first version", "Leave room to grow"],
+      },
+    ],
+    tone: "layer-red",
   },
 ];
 
-export const serviceDetails = [
-  {
-    title: "Business websites",
-    description: "A professional website that reflects your brand and turns visitors into customers. Suitable for companies, offices, clinics, factories, service businesses, tourism, and real estate.",
-    items: ["Service pages", "Project gallery and company information", "Contact and WhatsApp", "Layouts for all screen sizes", "Arabic and RTL support"],
-  },
-  {
-    title: "Web applications and systems",
-    description: "Turn day-to-day operations into a clearer, faster online workflow for booking, customer, property, staff, order, or data management.",
-    items: ["A system shaped around your process", "Clear, role-aware screens", "Room to grow", "Backend collaboration when required"],
-  },
-  {
-    title: "Online stores",
-    description: "A professional store to present products, receive orders, and keep sales organized.",
-    items: ["Products and categories", "Shopping cart and orders", "Customer views", "Promotions", "Store administration"],
-  },
-  {
-    title: "Bookings and appointments",
-    description: "A booking system for clinics, restaurants, venues, services, appointments, and consultations.",
-    items: ["Online booking and availability", "Appointment management", "Clear customer flows", "Fewer scheduling conflicts"],
-  },
-  {
-    title: "Admin dashboards",
-    description: "Manage your project from one clear, organized workspace.",
-    items: ["Content and users", "Products, orders, and bookings", "Records and analytics", "A single management view"],
-  },
-  {
-    title: "Multi-user systems",
-    description: "Give each person access to the information and actions they need.",
-    items: ["Role-based access", "Administrator and staff views", "Customer and manager views", "Permissions tailored to the workflow"],
-  },
-  {
-    title: "Custom solutions",
-    description: "Have an idea that does not fit a ready-made package? We can shape it together from the ground up.",
-    items: ["Clarify requirements", "Map the workflow", "Build a practical first version", "Leave room to grow"],
-  },
-];
+export const services = serviceDetails.map(({ number, letter, layer, title, description, tone }) => ({
+  number,
+  letter,
+  layer,
+  title,
+  description,
+  tone,
+}));
 
 export const processSteps = [
   { title: "Understand the goal", description: "We start from the idea: who it is for, what it should do, and which features matter most." },
@@ -309,7 +319,7 @@ const packageOptions: Omit<ServicePackage, "price">[] = [
   {
     id: "custom-app",
     name: "Custom web app",
-    label: "React app",
+    label: "Business system",
     startingPrice: 10000,
     openEnded: true,
     projectType: "React application or dashboard",
@@ -335,14 +345,14 @@ export const profile = {
   name: "Youssef El-Ashry",
   nameArabic: "يوسف العشري",
   alternateNames: ["Youssef El Ashry", "Youssef Al-Ashry", "Youssef Al Ashry"],
-  role: "Junior Frontend Developer",
+  role: "Frontend Developer",
   location: "Egypt",
   email: "yassef0100@gmail.com",
   phone: "+201214858840",
   phoneDisplay: "+20 121 485 8840",
-  availability: "Open to junior frontend roles and focused freelance projects",
+  availability: "Open to frontend roles and focused freelance projects",
   hero: {
-    headline: "Junior Frontend Developer",
+    headline: "Frontend Developer",
     summary:
       "I build responsive, interactive interfaces with a strong JavaScript foundation and practical React and TypeScript skills, focused on clear, user-friendly experiences.",
   },
@@ -355,13 +365,12 @@ export const profile = {
   },
 };
 
-export const navigation = [
+export const navigation: { label: string; href: string; mobileLabel?: string }[] = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "Journey", href: "#journey" },
   { label: "Toolkit", href: "#toolkit" },
   { label: "Services", href: "#services" },
-  { label: "Details", mobileLabel: "Service details", href: "#service-details" },
   { label: "Process", href: "#process" },
   { label: "Packages", href: "#pricing" },
   { label: "Contact", href: "#contact" },

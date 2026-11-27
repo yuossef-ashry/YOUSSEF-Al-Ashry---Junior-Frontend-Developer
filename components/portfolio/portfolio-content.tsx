@@ -1,13 +1,15 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import CertificateViewer from "@/components/certificates/certificate-viewer";
-import { milestones, navigation, packages, profile, projects, processSteps, serviceDetails, services, skills } from "@/lib/portfolio-data";
+import { milestones, navigation, packages, profile, projects, processSteps, serviceDetails, skills } from "@/lib/portfolio-data";
+import DownloadCvButton from "./download-cv-button";
 import PortfolioInteractions from "./portfolio-interactions";
 import PortfolioWork from "@/components/projects/portfolio-work";
 import ProjectBriefForm from "@/components/contact/project-brief-form";
 import FloatingContact from "@/components/contact/floating-contact";
 import ThemeToggle from "@/components/layout/theme-toggle";
 import ProjectOffer from "@/components/services/project-offer";
+import ServiceExplorer from "@/components/services/service-explorer";
 
 const heroPortraitSizes = "(max-width: 999px) min(calc(100vw - 40px), 520px), min(64vh, 40vw)";
 
@@ -30,6 +32,10 @@ const milestonesForRing = [
 
 export default function PortfolioContent() {
   const [firstName, ...lastName] = profile.name.split(" ");
+  const servicesWithExamples = serviceDetails.map((service) => ({
+    ...service,
+    example: projects.find((project) => project.title === service.exampleTitle),
+  }));
   const offers = packages.map((item) => {
     const example = projects.find((project) => project.title === item.exampleTitle);
     if (!example) throw new Error(`Unknown example project for package ${item.name}: ${item.exampleTitle}`);
@@ -44,54 +50,6 @@ export default function PortfolioContent() {
       tone: index === 1 ? "c-red" : "",
     })),
     ...milestonesForRing,
-  ];
-
-  const serviceGroups = [
-    {
-      title: "Websites & portfolios",
-      tag: "Business presence",
-      items: [
-        "Custom website design and development",
-        "Company and service pages",
-        "Project and portfolio galleries",
-        "Contact and WhatsApp integration",
-        "Arabic and RTL support",
-        "Responsive layouts and SEO-friendly structure",
-      ],
-    },
-    {
-      title: "Web applications",
-      tag: "React interfaces",
-      items: [
-        "Reusable React components",
-        "Forms and data visualization",
-        "API integration",
-        "Responsive application layouts",
-        "Backend collaboration when required",
-      ],
-    },
-    {
-      title: "Commerce & custom systems",
-      tag: "Practical workflows",
-      items: [
-        "Products, categories, and search",
-        "Cart and checkout interfaces",
-        "Orders and customer views",
-        "Bookings and appointment management",
-        "Custom workflows and integrations",
-      ],
-    },
-    {
-      title: "How I work",
-      tag: "From idea to launch",
-      items: [
-        "Understand the goal",
-        "Agree on the scope",
-        "Plan the experience",
-        "Build the interface",
-        "Review, refine, and hand over",
-      ],
-    },
   ];
 
   return (
@@ -110,7 +68,7 @@ export default function PortfolioContent() {
           <span className="nav-hover-pill" aria-hidden="true" />
           {navigation.map((item) => <a href={item.href} data-nav={item.href.slice(1)} key={item.href}><span className="nav-link-text"><span className="nav-link-label">{item.label}</span><span className="nav-link-echo" aria-hidden="true">{item.label}</span></span></a>)}
         </nav>
-        <div className="nav-tools"><ThemeToggle /></div>
+        <div className="nav-tools"><DownloadCvButton className="nav-cv" /><ThemeToggle /></div>
         <button className="menu-btn" aria-label="Open menu" aria-expanded="false">
           <span />
           <span />
@@ -142,7 +100,7 @@ export default function PortfolioContent() {
             <h1 className="hero-heading">
               <span className="label rv hero-name"><b aria-hidden="true">(00)</b> — {profile.name}</span>{" "}
               <span className="display hero-title">
-                <span className="line"><span className="rv-up">JUNIOR FRONTEND</span></span>{" "}
+                <span className="line"><span className="rv-up">FRONTEND</span></span>{" "}
                 <span className="line red"><span className="rv-up" style={{ "--d": ".12s" } as CSSProperties}>DEVELOPER</span></span>
               </span>
             </h1>
@@ -152,6 +110,7 @@ export default function PortfolioContent() {
             <div className="cta rv" style={{ "--d": ".35s" } as CSSProperties}>
               <a href="#work" className="btn btn-red">Explore Projects <i>↗</i></a>
               <a href="#contact-project-form" className="btn btn-ghost">Discuss a project</a>
+              <DownloadCvButton className="hero-cv" />
             </div>
           </div>
 
@@ -167,8 +126,8 @@ export default function PortfolioContent() {
           />
 
           <div className="fg hero-meta rv" style={{ "--d": ".5s" } as CSSProperties}>
-            <div><span className="mono-k">Open to</span><span>Junior roles &amp; freelance projects</span></div>
-            <div><span className="mono-k">Core strengths</span><span>JavaScript · React · TypeScript</span></div>
+            <div><span className="mono-k">Open to</span><span>Frontend roles &amp; freelance projects</span></div>
+            <div className="hero-strengths"><span className="mono-k">Core strengths</span><span className="hero-strengths-list">JavaScript · React · Next.js · TypeScript</span></div>
           </div>
           <a href="#about" className="fg scroll-cue" aria-label="Scroll to About"><span />Scroll</a>
         </section>
@@ -180,12 +139,12 @@ export default function PortfolioContent() {
             <p className="label rv"><b>(01)</b> — About me</p>
             <h2 className="display h2 rv">Clarity in<br /><span className="red">every interaction.</span></h2>
             <div className="about-text">
-              <p className="rv">I&apos;m {profile.name}, a junior frontend developer based in {profile.location}. I build responsive websites and React interfaces with JavaScript and TypeScript, with a focus on clear navigation, accessible interactions, and maintainable code.</p>
+              <p className="rv">I&apos;m {profile.name}, a frontend developer based in {profile.location}. I build responsive websites and React interfaces with JavaScript and TypeScript, with a focus on clear navigation, accessible interactions, and maintainable code.</p>
               <p className="rv">Across my projects, I keep components organized and UI states deliberate so the code remains maintainable as the product grows. I value the balance of visual quality, usability, and reliable behavior because each interface should serve both its users and its product team.</p>
             </div>
 
             <dl className="facts rv">
-              <div className="fact"><dt>Role</dt><dd>Frontend<small>Junior Developer</small></dd></div>
+              <div className="fact"><dt>Role</dt><dd>Frontend<small>Developer</small></dd></div>
               <div className="fact"><dt>Core stack</dt><dd>React + TS<small>JavaScript (ES6+)</small></dd></div>
               <div className="fact"><dt>Strength</dt><dd>Responsive<small>Clear, interactive UI</small></dd></div>
               <div className="fact red-fact"><dt>Available for</dt><dd>Roles &amp; freelance<small>Focused projects</small></dd></div>
@@ -245,66 +204,20 @@ export default function PortfolioContent() {
           </div>
         </section>
 
-        <section id="services" className="scene stack" data-scene="layers">
+        <section id="services" aria-labelledby="services-title" className="scene stack service-stack" data-scene="layers">
           <div className="fg stack-inner">
             <div className="stack-head">
               <p className="label rv"><b>(05)</b> — Services</p>
-              <h2 className="display h2 rv">Digital work.<br /><span className="red">Built around you.</span></h2>
-              <p className="stack-sub rv">From business websites and portfolios to interactive web applications, I shape practical digital work around your goals, users, and workflow.</p>
+              <h2 className="display h2 rv" id="services-title">Digital work.<br /><span className="red">Built around you.</span></h2>
+              <p className="stack-sub rv">Choose a service or keep scrolling to explore what it includes.</p>
             </div>
-
-            <div className="layers">
-              {services.map((service, index) => (
-                <article className={`layer rv ${service.tone}`} style={{ "--d": `${index * 0.08}s` } as CSSProperties} key={service.title}>
-                  <span className="layer-n">{service.number} · {service.layer}</span>
-                  <span className="layer-l display">{service.letter}</span>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="skill-groups">
-              {serviceGroups.map((group, index) => (
-                <div className="sg rv" style={{ "--d": `${index * 0.08}s` } as CSSProperties} key={group.title}>
-                  <div className="sg-top"><h3>{group.title}</h3><span className={`sg-tag${index === 0 ? " hot" : ""}`}>{group.tag}</span></div>
-                  <ul className="chips">{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="service-details" className="scene service-details" data-scene="service-details">
-          <div className="fg service-details-inner">
-            <p className="label rv"><b>(06)</b> — Service details</p>
-            <h2 className="display h2 rv">Digital solutions<br /><span className="red">built for your business.</span></h2>
-            <p className="service-details-intro rv">I learn what your project needs, then shape the right solution around your workflow.</p>
-            <div className="service-detail-grid">
-              {serviceDetails.map((service, index) => (
-                <article className="service-detail rv" key={service.title} style={{ "--d": `${index * 0.06}s` } as CSSProperties}>
-                  <span className="service-detail-number">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                  <ul>{service.items.map((item) => <li key={item}>{item}</li>)}</ul>
-                  <a href="#contact-project-form">Discuss this service ↗</a>
-                </article>
-              ))}
-            </div>
-            <div className="service-combine rv">
-              <div>
-                <p className="label"><b>NEED A COMBINATION?</b> — Custom scope</p>
-                <h3 className="display">Websites, systems, and dashboards that fit together.</h3>
-                <p>We can bring your website, systems, and dashboards together into one solution that fits your workflow.</p>
-              </div>
-              <a className="btn btn-red" href="#contact-project-form">Discuss a custom solution ↗</a>
-            </div>
+            <ServiceExplorer services={servicesWithExamples} />
           </div>
         </section>
 
         <section id="process" className="scene process" data-scene="process">
           <div className="fg process-inner">
-            <p className="label rv"><b>(07)</b> — From idea to launch</p>
+            <p className="label rv"><b>(06)</b> — From idea to launch</p>
             <h2 className="display h2 rv">A clear path<br /><span className="red">from idea to launch.</span></h2>
             <p className="process-intro rv">A simple, transparent process — from the first message to a finished, working website.</p>
             <ol className="process-steps">
@@ -366,7 +279,7 @@ export default function PortfolioContent() {
 
         <section id="contact" className="scene contact" data-scene="contact">
           <div className="fg contact-top">
-            <p className="label"><b>(09)</b> — Contact</p>
+            <p className="label"><b>(08)</b> — Contact</p>
             <h2 className="display contact-head">Make your next idea<br /><span>feel at home online.</span></h2>
             <p className="contact-lede">Tell me what you are working toward. We can shape the right frontend experience, agree on a clear scope, and take it one step at a time.</p>
             <a className="btn btn-dark" href="#contact-project-form">Discuss your project <i aria-hidden="true">↗</i></a>
@@ -376,7 +289,7 @@ export default function PortfolioContent() {
             <div className="contact-id">
               <p className="display contact-name">{firstName}<br />{lastName.join(" ")}</p>
               <p className="contact-name-ar" lang="ar"><bdi>{profile.nameArabic}</bdi></p>
-              <p className="contact-open">Open to focused projects and junior frontend roles</p>
+              <p className="contact-open">Open to focused projects and frontend roles</p>
               <a href={`mailto:${profile.email}`} className="contact-mail">{profile.email}</a>
             </div>
             <div className="contact-portrait" aria-hidden="true">

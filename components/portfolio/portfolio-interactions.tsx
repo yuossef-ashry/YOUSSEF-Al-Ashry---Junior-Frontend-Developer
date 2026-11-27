@@ -75,7 +75,6 @@ export default function PortfolioInteractions() {
       journey: "journey",
       orbit: "toolkit",
       layers: "services",
-      "service-details": "service-details",
       process: "process",
       awards: "pricing",
       contact: "contact",
@@ -461,7 +460,7 @@ export default function PortfolioInteractions() {
         const target = event.target;
         cursor.classList.toggle(
           "is-hover",
-          target instanceof Element && Boolean(target.closest("a, button, .layer, .stat, .cert")),
+          target instanceof Element && Boolean(target.closest("a, button, .stat, .cert")),
         );
       };
       window.addEventListener("mousemove", mouseMove, { passive: true });

@@ -27,6 +27,24 @@ export type ServicePackage = {
   exampleTitle: string;
 };
 
+export type ServiceDetail = {
+  id: string;
+  number: string;
+  letter: string;
+  layer: string;
+  title: string;
+  exampleTitle: string;
+  summary: string;
+  description: string;
+  items: string[];
+  details?: Array<{
+    title: string;
+    description: string;
+    items?: string[];
+  }>;
+  tone: string;
+};
+
 export const packageSelectionEvent = "portfolio:package-select";
 
 export function isProjectList(value: unknown): value is Project[] {

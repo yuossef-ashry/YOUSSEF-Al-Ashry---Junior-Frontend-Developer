@@ -1,9 +1,9 @@
 "use client";
 
 import { type CSSProperties, useCallback, useEffect, useMemo, useLayoutEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { isProjectList, type Project } from "@/lib/portfolio-types";
 import ProjectDetails from "./project-details";
+import ProjectDevice from "./project-device";
 
 type Filter = "all" | "website" | "app";
 
@@ -172,20 +172,7 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
                 role="button"
                 tabIndex={0}
               >
-                <div className="device">
-                  <div className="d-bar"><span>{project.title}</span><b aria-hidden="true">↗</b></div>
-                  <div className="d-body">
-                    {project.image ? (
-                      <Image className="shot" src={project.image} alt={`${project.title} project preview`} width={project.imageWidth ?? 1535} height={project.imageHeight ?? 862} sizes="(max-width: 999px) calc(100vw - 40px), 38vw" />
-                    ) : (
-                      <div className="project-fallback">
-                        <span>Project preview</span>
-                        <strong>{project.previewTitle}</strong>
-                        <p>{project.previewRows.join(" · ")}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <ProjectDevice project={project} sizes="(max-width: 999px) calc(100vw - 40px), 38vw" />
               </div>
             </article>
           ))}
