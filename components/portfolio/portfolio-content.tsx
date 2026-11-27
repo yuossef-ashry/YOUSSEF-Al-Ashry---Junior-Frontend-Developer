@@ -1,12 +1,12 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import CertificateViewer from "@/components/certificates/certificate-viewer";
 import { milestones, navigation, packages, profile, projects, processSteps, serviceDetails, skills } from "@/lib/portfolio-data";
 import DownloadCvButton from "./download-cv-button";
 import PortfolioInteractions from "./portfolio-interactions";
 import PortfolioWork from "@/components/projects/portfolio-work";
 import ProjectBriefForm from "@/components/contact/project-brief-form";
 import FloatingContact from "@/components/contact/floating-contact";
+import JourneySteps from "@/components/portfolio/journey-steps";
 import ThemeToggle from "@/components/layout/theme-toggle";
 import ProjectOffer from "@/components/services/project-offer";
 import ServiceExplorer from "@/components/services/service-explorer";
@@ -163,19 +163,7 @@ export default function PortfolioContent() {
             <p className="label rv"><b>(03)</b> — The journey so far</p>
             <h2 className="display h2 rv">Experience<br /><span className="red">&amp; milestones.</span></h2>
 
-            <ol className="j-steps">
-              {milestones.map((milestone, index) => (
-                <li className="j-step rv" data-year={milestone.year} key={`${milestone.title}-${index}`}>
-                  <span className="j-when">{milestone.label}</span>
-                  <h3>{milestone.title}</h3>
-                  <p className="j-where">{milestone.where}</p>
-                  <p>{milestone.description}</p>
-                  <p className="j-score">{milestone.outcome}</p>
-                  {milestone.certificateImage && <CertificateViewer image={milestone.certificateImage} title={milestone.title} />}
-                  {milestone.href && <p className="j-where"><a href={milestone.href} target="_blank" rel="noreferrer">Verify certificate ↗</a></p>}
-                </li>
-              ))}
-            </ol>
+            <JourneySteps initialMilestones={milestones} />
           </div>
         </section>
 

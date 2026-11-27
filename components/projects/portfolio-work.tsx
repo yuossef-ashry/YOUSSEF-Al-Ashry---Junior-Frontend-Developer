@@ -2,6 +2,7 @@
 
 import { type CSSProperties, useCallback, useEffect, useMemo, useLayoutEffect, useRef, useState } from "react";
 import { isProjectList, type Project } from "@/lib/portfolio-types";
+import { fetchSanityProjects } from "@/lib/sanity";
 import ProjectDetails from "./project-details";
 import ProjectDevice from "./project-device";
 
@@ -64,6 +65,12 @@ export default function PortfolioWork({ initialProjects }: PortfolioWorkProps) {
     const controller = new AbortController();
 
     async function loadProjects() {
+      // Content edited in Sanity wins; the built-in list is the fallback.
+      const sanityProjects = await fetchSanityProjects(controller.signal);
+      if (sanityProjects && !controller.signal.aborted) {
+        setProjects(sanityProjects);
+        return;
+      }
       try {
         const response = await fetch("/api/projects", { signal: controller.signal });
         if (!response.ok) return;

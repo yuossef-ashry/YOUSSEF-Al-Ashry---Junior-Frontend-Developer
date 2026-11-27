@@ -9,3 +9,6 @@ out/
 !.env.example
 .vercel/
 .wrangler/
+studio/dist/
+studio/node_modules/
+studio/.sanity/

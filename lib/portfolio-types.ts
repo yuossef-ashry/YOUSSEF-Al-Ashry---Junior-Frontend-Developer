@@ -63,3 +63,14 @@ export function isProjectList(value: unknown): value is Project[] {
       && (item.liveUrl === undefined || typeof item.liveUrl === "string");
   });
 }
+
+export type Milestone = {
+  year: string;
+  label: string;
+  title: string;
+  where: string;
+  description: string;
+  outcome: string;
+  href?: string;
+  certificateImage?: string;
+};

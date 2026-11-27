@@ -11,6 +11,6 @@ const nextConfig: NextConfig = process.env.DEPLOY_TARGET === "cloudflare-pages"
         imageSizes: [],
       },
     }
-  : {};
+  : { images: { remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }] } };
 
 export default nextConfig;
