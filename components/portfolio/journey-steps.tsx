@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CertificateViewer from "@/components/certificates/certificate-viewer";
 import type { Milestone } from "@/lib/portfolio-types";
 import { fetchSanityMilestones } from "@/lib/sanity";
 
 export default function JourneySteps({ initialMilestones }: { initialMilestones: Milestone[] }) {
   const [milestones, setMilestones] = useState(initialMilestones);
-  const listRef = useRef<HTMLOListElement>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -18,12 +17,13 @@ export default function JourneySteps({ initialMilestones }: { initialMilestones:
   }, []);
 
   useEffect(() => {
-    // Steps added from Sanity appear after the scroll-reveal observer has started, so show them directly.
-    listRef.current?.querySelectorAll(".rv:not(.in)").forEach((element) => element.classList.add("in"));
-  }, [milestones]);
+    if (milestones !== initialMilestones) {
+      window.dispatchEvent(new Event("portfolio:journey-change"));
+    }
+  }, [initialMilestones, milestones]);
 
   return (
-    <ol className="j-steps" ref={listRef}>
+    <ol className="j-steps">
       {milestones.map((milestone, index) => (
         <li className="j-step rv" data-year={milestone.year} key={`${milestone.title}-${index}`}>
           <span className="j-when">{milestone.label}</span>

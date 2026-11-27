@@ -281,7 +281,7 @@ export default function PortfolioInteractions() {
     // Fill the journey rail up to the reading position as the page scrolls.
     const timeline = $(".j-steps") as HTMLElement | null;
     const yearElement = $(".j-year") as HTMLElement | null;
-    const steps = $$(".j-step") as HTMLElement[];
+    let steps = timeline ? $$(".j-step", timeline) : [];
     let shownYear = yearElement?.textContent ?? "";
     let pendingYear: string | null = null;
     let journeyYearTimer: number | undefined;
@@ -321,6 +321,17 @@ export default function PortfolioInteractions() {
         yearElement.classList.remove("swap");
       }, 260);
     }
+
+    function refreshJourney() {
+      if (!timeline) return;
+      steps.forEach((step) => revealObserver.unobserve(step));
+      steps = $$(".j-step", timeline);
+      steps.filter((step) => !step.classList.contains("in")).forEach((step) => revealObserver.observe(step));
+      updateJourney();
+    }
+
+    window.addEventListener("portfolio:journey-change", refreshJourney);
+    disposers.push(() => window.removeEventListener("portfolio:journey-change", refreshJourney));
 
     // Toolkit orbit.
     const orbit = $("#toolkit") as HTMLElement | null;
